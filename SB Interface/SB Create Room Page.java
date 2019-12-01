@@ -11,6 +11,7 @@ public class SB Create Room Page extends SB Dashboard {
      * Default constructor
      */
     public SB Create Room Page() {
+
     }
 
     /**
