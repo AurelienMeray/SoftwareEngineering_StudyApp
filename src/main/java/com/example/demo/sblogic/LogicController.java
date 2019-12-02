@@ -1,22 +1,22 @@
-package com.studybud.studybuddemo.SBLogic;
+package com.example.demo.sblogic;
 
 import java.util.*;
 
-public class SBLogicController {
+public class LogicController {
 
     //singleton setup
-    private static SBLogicController instance;
+    private static LogicController instance;
 
     /**
      * Default constructor
      */
-    public SBLogicController() {
+    public LogicController() {
 
     }
 
-    public static SBLogicController getInstance(){
+    public static LogicController getInstance(){
         if(instance == null){
-            instance = new SBLogicController();
+            instance = new LogicController();
         }
         return instance;
     }

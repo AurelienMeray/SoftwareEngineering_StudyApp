@@ -24,6 +24,8 @@ public class UserController {
         return testService.reqLoginInfo(userName);
     }
 
+
+
     /*
     @PostMapping(path = "{register}")
     public int AddUser(@Valid @NonNull @RequestBody User user) {
