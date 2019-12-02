@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.PersonDao;
 import com.example.demo.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
+//@Service
 public class PersonService {
-
+/*
     private final PersonDao personDao;
 
     @Autowired
@@ -39,4 +38,5 @@ public class PersonService {
     public int updatePerson(UUID id, Person newPerson) {
         return personDao.updatePersonById(id, newPerson);
     }
+    */
 }

@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 public class Person {
+    /*
     private final UUID id;
     @NotBlank
     private final String name;
@@ -23,4 +24,5 @@ public class Person {
     public UUID getId() {
         return id;
     }
+     */
 }

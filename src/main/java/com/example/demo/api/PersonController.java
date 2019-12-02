@@ -10,10 +10,12 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/api/v1/person")
-@RestController
+//@RequestMapping("/api/v1/person")
+//@RestController
 public class PersonController {
+    /*
     private final PersonService personService;
+
 
     @Autowired
     public PersonController(PersonService personService) {
@@ -45,4 +47,6 @@ public class PersonController {
     public void updatePersonById(@PathVariable("id") UUID id, @Valid @NonNull @RequestBody Person personToUpdate) {
         personService.updatePerson(id, personToUpdate);
     }
+    /*
+     */
 }
