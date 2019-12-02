@@ -11,7 +11,7 @@ CREATE TABLE "USER"
 
 CREATE TABLE "ROOM"
 (
-    room_ID           INT            NOT NULL,
+    room_ID           UUID           NOT NULL,
     room_Admin        varchar(20)    NOT NULL,
     room_Name         varchar(50)    NOT NULL,
     subject           varchar(50)    NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE "ROOM"
 CREATE TABLE "USERROOM"
 (
     username    varchar(20)    NOT NULL,
-    room_ID     INT            NOT NULL,
+    room_ID     UUID           NOT NULL,
     join_Date   varchar(30),
     CONSTRAINT USERROOMPK
        PRIMARY KEY (username, room_ID),

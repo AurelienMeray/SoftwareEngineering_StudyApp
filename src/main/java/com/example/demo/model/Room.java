@@ -2,8 +2,10 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.UUID;
+
 public class Room {
-    private int roomId;
+    private UUID roomId;
     private String roomAdmin;
     private String roomName;
     private String subject;
@@ -16,6 +18,7 @@ public class Room {
                 @JsonProperty("location")String location,
                 @JsonProperty("time")String time,
                 @JsonProperty("description")String description) {
+        this.roomId = UUID.randomUUID();
         this.roomName = roomName;
         this.subject = subject;
         this.location = location;
@@ -26,12 +29,17 @@ public class Room {
     public Room() {
     }
 
-    public int getRoomId() {
+    public UUID getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(UUID roomId) {
         this.roomId = roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        UUID roomIDUUID = UUID.fromString(roomId);
+        this.roomId = roomIDUUID;
     }
 
     public String getRoomAdmin() {

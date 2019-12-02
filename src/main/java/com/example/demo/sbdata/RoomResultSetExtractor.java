@@ -11,7 +11,7 @@ public class RoomResultSetExtractor implements ResultSetExtractor {
     @Override
     public Object extractData(ResultSet rs) throws SQLException {
         Room room = new Room();
-        room.setRoomId(rs.getInt(1));
+        room.setRoomId(rs.getString(1));
         room.setRoomAdmin(rs.getString(2));
         room.setRoomName(rs.getString(3));
         room.setSubject(rs.getString(4));

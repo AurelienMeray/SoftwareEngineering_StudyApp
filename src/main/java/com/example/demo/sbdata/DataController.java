@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -111,7 +112,7 @@ public class DataController {
         int result = 0;
         try {
             update(sql, new Object[]{room.getRoomId(),
-                    user.getFirstName(),
+                    user.getUserName(),
                     room.getRoomName(),
                     room.getSubject(),
                     room.getLocation(),
@@ -135,14 +136,16 @@ public class DataController {
         if (user == null || room == null) {
             throw new IllegalArgumentException("User and room cannot be null");
         }
-        ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.of("Z"));
+        ZonedDateTime currentDateTime = ZonedDateTime.now(ZoneId.of("Z"));
+        LocalDate currentDate = currentDateTime.toLocalDate();
+
         String sql = "INSERT INTO \"sbdatabase\".\"USERROOM\"\n" +
                 "VALUES (?, ?, ?)";
         int result = 0;
         try {
             update(sql, new Object[]{user.getUserName(),
                     room.getRoomId(),
-                    currentTime,
+                    currentDate.toString(),
             });
             result = 1;
         } catch (DataAccessException e) {
@@ -171,12 +174,14 @@ public class DataController {
         return getResultSet("SELECT * FROM \"sbdatabase\".\"USER\"", new UserRowMapper());
     }
 
-    public List<User> getAllRooms() {
+    public List<Room> getAllRooms() {
         return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\"", new RoomRowMapper());
     }
 
     public int deleteRoom(Room room) {
-        if (room == null) throw new IllegalArgumentException();
+        if (room == null) {
+            throw new IllegalArgumentException();
+        }
         String sql = "DELETE FROM \"sbdatabase\".\"ROOM\" r WHERE r.room_ID = ?;";
         int result = 0;
         try {

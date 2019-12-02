@@ -40,8 +40,10 @@ public class DataFacade {
     /**
      *
      */
-    public List<Room> requestRooms(Room room) {
-        List<Room> rooms = db.queryRooms(room);
+    public List<Room> requestRooms(String subject) {
+        Room request = new Room();
+        request.setSubject(subject);
+        List<Room> rooms = db.queryRooms(request);
         return rooms;
     }
 
