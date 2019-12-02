@@ -1,11 +1,8 @@
 package com.example.demo.api;
 
-import com.example.demo.model.Room;
 import com.example.demo.model.User;
 import com.example.demo.sbdata.DataFacade;
-import com.example.demo.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
