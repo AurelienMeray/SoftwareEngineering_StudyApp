@@ -4,6 +4,8 @@ import com.example.demo.sbdata.DataController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TestService {
     private final DataController db;
@@ -18,7 +20,16 @@ public class TestService {
     //}
 
 
-    public String login(User user) {
-        return "";
+    public int login(User user) {
+        return db.checkForUser(user);
     }
+
+    public int addUser(User user) {
+        return db.saveUser(user);
+    }
+
+    public List<User> getAllUsers() {
+        return db.getAllUsers();
+    }
+
 }

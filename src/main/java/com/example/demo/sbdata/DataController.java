@@ -65,7 +65,6 @@ public class DataController {
         jdbcTemplate.update(sql);
     }
 
-    /*
     public int checkForUser(User user) {
         int result = 0;
         String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u WHERE u.username = ? AND u.password = ?";
@@ -76,7 +75,6 @@ public class DataController {
 
         return result;
     }
-    */
 
     /**
      * Adds a user to the user table.
@@ -87,8 +85,8 @@ public class DataController {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
         }
-        String sql = "INSERT INTO \"sbdatabase\".\"ROOM\"\n" +
-                     "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO \"sbdatabase\".\"USER\"\n" +
+                     "VALUES (?, ?, ?, ?, ?)";
         int result = 0;
         try {
             update(sql, new Object[]{user.getUserName(),
@@ -104,6 +102,29 @@ public class DataController {
         return result;
     }
 
+    public int saveRoom(User user, Room room) {
+        if (user == null || room == null) {
+            throw new IllegalArgumentException("User and room cannot be null");
+        }
+        String sql = "INSERT INTO \"sbdatabase\".\"ROOM\"\n" +
+                "VALUES (?, ?, ?, ?, ?, ?)";
+        int result = 0;
+        try {
+            update(sql, new Object[]{room.getRoomId(),
+                    user.getFirstName(),
+                    room.getRoomName(),
+                    room.getSubject(),
+                    room.getLocation(),
+                    room.getDescription()
+            });
+            updateUserRooms(user, room);
+            result = 1;
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     /*
      *  Adds a room to this user's room list.
      *  @param user the user that will be part of the room
@@ -111,7 +132,9 @@ public class DataController {
      */
 
     public int updateUserRooms(User user, Room room) {
-        if (user == null || room == null) throw new IllegalArgumentException("User and room cannot be null");
+        if (user == null || room == null) {
+            throw new IllegalArgumentException("User and room cannot be null");
+        }
         ZonedDateTime currentTime = ZonedDateTime.now(ZoneId.of("Z"));
         String sql = "INSERT INTO \"sbdatabase\".\"USERROOM\"\n" +
                 "VALUES (?, ?, ?)";
@@ -129,17 +152,57 @@ public class DataController {
     }
 
 
-    public User getUserInfo(String username) {
-        if (username == null) {
+    public User getUserInfo(User user) {
+        if (user == null) {
             throw new IllegalArgumentException("username cannot be null");
         }
+        System.out.println(user.getUserName());
         User loginInfo;
         String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u WHERE u.username = ?";
-        loginInfo = getFirstResult(sql, new Object[]{username}, new UserRowMapper());
+        loginInfo = getFirstResult(sql, new Object[]{user.getUserName()}, new UserRowMapper());
 
         if (loginInfo == null) {
             loginInfo = new User();
         }
         return loginInfo;
+    }
+
+    public List<User> getAllUsers() {
+        return getResultSet("SELECT * FROM \"sbdatabase\".\"USER\"", new UserRowMapper());
+    }
+
+    public List<User> getAllRooms() {
+        return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\"", new RoomRowMapper());
+    }
+
+    public int deleteRoom(Room room) {
+        if (room == null) throw new IllegalArgumentException();
+        String sql = "DELETE FROM \"sbdatabase\".\"ROOM\" r WHERE r.room_ID = ?;";
+        int result = 0;
+        try {
+            update(sql, new Object[]{room.getRoomId()});
+            result = 1;
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<Room> queryRooms(Room room) {
+        return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\" r WHERE r.subject = ?",
+                new Object[]{room.getSubject()},
+                new RoomRowMapper());
+    }
+
+    public User getRoomAdminInfo(Room room) {
+        String sql = "SELECT username FROM \"sbdatabase\".\"USER\" u, \"sbdatabase\".\"ROOM\" r WHERE r.room_ID = " +
+                "? AND u.username = r.room_Admin;\n";
+        User result = getFirstResult(sql,
+                new Object[]{room.getRoomId()},
+                new RoomRowMapper());
+        if (result == null) {
+            result = new User();
+        }
+        return result;
     }
 }

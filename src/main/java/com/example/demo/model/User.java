@@ -11,8 +11,14 @@ public class User {
     private String password;
 
     public User(@JsonProperty("username")String userName,
+                @JsonProperty("firstname")String firstName,
+                @JsonProperty("lastname")String lastName,
+                @JsonProperty("email")String email,
                 @JsonProperty("password")String password) {
         this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.password = password;
     }
 

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Room {
     private int roomId;
-    private User roomAdmin;
+    private String roomAdmin;
     private String roomName;
     private String subject;
     private String location;
@@ -23,7 +23,8 @@ public class Room {
         this.description = description;
     }
 
-    public Room() {}
+    public Room() {
+    }
 
     public int getRoomId() {
         return roomId;
@@ -33,11 +34,11 @@ public class Room {
         this.roomId = roomId;
     }
 
-    public User getRoomAdmin() {
+    public String getRoomAdmin() {
         return roomAdmin;
     }
 
-    public void setRoomAdmin(User roomAdmin) {
+    public void setRoomAdmin(String roomAdmin) {
         this.roomAdmin = roomAdmin;
     }
 
