@@ -10,19 +10,16 @@ public class Room {
     private String roomName;
     private String subject;
     private String location;
-    private String time;
     private String description;
 
     public Room(@JsonProperty("name")String roomName,
                 @JsonProperty("subject")String subject,
                 @JsonProperty("location")String location,
-                @JsonProperty("time")String time,
                 @JsonProperty("description")String description) {
         this.roomId = UUID.randomUUID();
         this.roomName = roomName;
         this.subject = subject;
         this.location = location;
-        this.time = time;
         this.description = description;
     }
 
@@ -72,14 +69,6 @@ public class Room {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getDescription() {

@@ -178,10 +178,13 @@ public class DataController {
         return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\"", new RoomRowMapper());
     }
 
-    public int deleteRoom(Room room) {
+    public int deleteRoom(User user, Room room) {
         if (room == null) {
             throw new IllegalArgumentException();
         }
+        User admin = getRoomAdminInfo(room);
+        if (!user.equals(admin)) return 0;
+
         String sql = "DELETE FROM \"sbdatabase\".\"ROOM\" r WHERE r.room_ID = ?;";
         int result = 0;
         try {
@@ -194,20 +197,27 @@ public class DataController {
     }
 
     public List<Room> queryRooms(Room room) {
-        return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\" r WHERE r.subject = ?",
-                new Object[]{room.getSubject()},
-                new RoomRowMapper());
+        List<Room> resultSet =  getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\" r WHERE r.subject = ?",
+                                    new Object[]{room.getSubject()},
+                                    new RoomRowMapper());
+        return resultSet;
     }
 
     public User getRoomAdminInfo(Room room) {
-        String sql = "SELECT username FROM \"sbdatabase\".\"USER\" u, \"sbdatabase\".\"ROOM\" r WHERE r.room_ID = " +
-                "? AND u.username = r.room_Admin;\n";
+        String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u, \"sbdatabase\".\"ROOM\" r WHERE r.room_ID = ? AND u.username = r.room_Admin";
         User result = getFirstResult(sql,
                 new Object[]{room.getRoomId()},
-                new RoomRowMapper());
+                new UserRowMapper());
         if (result == null) {
             result = new User();
         }
         return result;
+    }
+
+    public void clearAllData() {
+        //for test set up purposes
+        update("DELETE FROM \"sbdatabase\".\"USERROOM\"");
+        update("DELETE FROM \"sbdatabase\".\"ROOM\"");
+        update("DELETE FROM \"sbdatabase\".\"USER\"");
     }
 }

@@ -32,16 +32,26 @@ public class UserController {
         User joe = new User("joeshmoe", "joe", "schmoe", "email1", "password");
         User mac = new User("macintosh", "mac", "intosh", "email2", "password");
 
-        Room joeRoom = new Room("test1", "cs", "location", "time", "desc");
-        Room macRoom = new Room("test2", "calc", "location", "time", "desc");
+        Room joeRoom = new Room("test1", "cs", "location", "desc");
+        Room macRoom = new Room("test2", "calc", "location", "desc");
+        Room macRoom2 = new Room("test2", "calc", "location", "desc");
+        Room macRoom3 = new Room("test2", "bio", "location", "desc");
 
-        int result = 0;
+        User marv = new User("marv", "marvin", "torres", "email3", "password");
+
+        testService.clearAllData();
+
+        int result;
 
         result = testService.requestReg(joe);
 
         if (result == 0) return null;
 
         result = testService.requestReg(mac);
+
+        if (result == 0) return null;
+
+        result = testService.requestReg(marv);
 
         if (result == 0) return null;
 
@@ -53,7 +63,27 @@ public class UserController {
 
         if (result == 0) return null;
 
-        String subject = "cs";
+        result = testService.createRoom(mac, macRoom2);
+
+        if (result == 0) return null;
+
+        result = testService.createRoom(mac, macRoom3);
+
+        if (result == 0) return null;
+
+        result = testService.connectUserRoom(marv, macRoom3);
+
+        if (result == 0) return null;
+
+        String subject = "calc";
+
+        result = testService.deleteRoom(mac, macRoom2);
+
+        if (result == 0) return null;
+
+        result = testService.deleteRoom(marv, macRoom3);
+
+        if (result == 0) System.out.println("good");
 
         return testService.requestRooms(subject);
     }

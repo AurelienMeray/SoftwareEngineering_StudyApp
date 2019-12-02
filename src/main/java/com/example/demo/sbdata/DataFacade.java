@@ -58,8 +58,8 @@ public class DataFacade {
     /**
      *
      */
-    public int deleteRoom(Room room) {
-        int result = db.deleteRoom(room);
+    public int deleteRoom(User user, Room room) {
+        int result = db.deleteRoom(user, room);
         return result;
     }
 
@@ -69,6 +69,10 @@ public class DataFacade {
     public int connectUserRoom(User user, Room room) {
         int result = db.updateUserRooms(user, room);
         return result;
+    }
+
+    public void clearAllData() {
+        db.clearAllData();
     }
 
 }

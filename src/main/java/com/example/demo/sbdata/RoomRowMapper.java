@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class RoomRowMapper implements RowMapper {
     @Override
     public Object mapRow(ResultSet rs, int line) throws SQLException {
-        UserResultSetExtractor extractor = new UserResultSetExtractor();
+        RoomResultSetExtractor extractor = new RoomResultSetExtractor();
         return extractor.extractData(rs);
     }
 }
