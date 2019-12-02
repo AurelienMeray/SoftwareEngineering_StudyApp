@@ -35,7 +35,7 @@ public class DataController {
     public <T> T getFirstResult(String sql, Object[] params, RowMapper rowMapper) {
         List<T> resultSet = jdbcTemplate.query(sql,
                 params,
-                new UserRowMapper());
+                rowMapper);
 
         if (resultSet.isEmpty()) {
             return null;
@@ -46,14 +46,14 @@ public class DataController {
 
     public <T> List<T> getResultSet(String sql, RowMapper rowMapper) {
         List<T> resultSet = jdbcTemplate.query(sql,
-                new UserRowMapper());
+                rowMapper);
         return resultSet;
     }
 
     public <T> List<T> getResultSet (String sql, Object[] params, RowMapper rowMapper) {
         List<T> resultSet = jdbcTemplate.query(sql,
                 params,
-                new UserRowMapper());
+                rowMapper);
         return resultSet;
     }
 
