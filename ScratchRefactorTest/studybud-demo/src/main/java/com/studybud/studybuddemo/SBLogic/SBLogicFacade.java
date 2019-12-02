@@ -1,11 +1,15 @@
 package com.studybud.studybuddemo.SBLogic;
 
-public class SBLogicFacade {
+public class SBLogicFacade  {
+
+    //Instantiate with singleton method
+    SBLogicController controller = SBLogicController.getInstance();
 
     /**
      * Default constructor
      */
     public SBLogicFacade() {
+
     }
 
 
@@ -14,6 +18,8 @@ public class SBLogicFacade {
      */
     public void requestLoginPage() {
         // TODO implement here
+        //controller.requestPage(LoginPage);
+        //react frontend already handles pulling up loginpage?
     }
 
     /**
@@ -35,6 +41,9 @@ public class SBLogicFacade {
      */
     public void endSessionRequest() {
         // TODO implement here
+        controller.endSessionRequest();
+        //if request valid
+        controller.endSession();
     }
 
     /**
