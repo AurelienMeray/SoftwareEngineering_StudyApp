@@ -196,9 +196,11 @@ public class DataController {
         return result;
     }
 
-    public List<Room> queryRooms(Room room) {
+    public List<Room> queryRooms(String subject) {
+        Room request = new Room();
+        request.setSubject(subject);
         List<Room> resultSet =  getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\" r WHERE r.subject = ?",
-                                    new Object[]{room.getSubject()},
+                                    new Object[]{subject},
                                     new RoomRowMapper());
         return resultSet;
     }
