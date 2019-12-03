@@ -17,7 +17,7 @@ public class LogicFacade {
     private LogicController controller;
 
     /**
-     * Default constructor
+     * constructor
      */
     @Autowired
     public LogicFacade(LogicController controller) {

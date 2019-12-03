@@ -25,7 +25,7 @@ public class LogicController {
     private DataFacade db;
 
     /**
-     * Default constructor
+     * constructor
      */
     @Autowired
     public LogicController(DataFacade db) {
