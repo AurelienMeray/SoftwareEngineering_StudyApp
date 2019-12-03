@@ -27,6 +27,7 @@ public class SBLogicFacade  {
      */
     public void displayRequest() {
         // TODO implement here
+        // sequence diagram
     }
 
     /**
@@ -34,6 +35,7 @@ public class SBLogicFacade  {
      */
     public void verifyLoginRequest() {
         // TODO implement here
+        controller.verifyLogin();
     }
 
     /**
@@ -51,6 +53,8 @@ public class SBLogicFacade  {
      */
     public void requestRegPage() {
         // TODO implement here
+        //react handles page?
+        controller.requestPage();
     }
 
     /**
@@ -58,6 +62,7 @@ public class SBLogicFacade  {
      */
     public void requestReg() {
         // TODO implement here
+        controller.requestReg();
     }
 
     /**
@@ -65,6 +70,7 @@ public class SBLogicFacade  {
      */
     public void requestSearchPage() {
         // TODO implement here
+        // react implements pages?
     }
 
     /**
@@ -72,6 +78,8 @@ public class SBLogicFacade  {
      */
     public void requestSearch() {
         // TODO implement here
+        controller.requestSearch();
+
     }
 
     /**
@@ -79,6 +87,7 @@ public class SBLogicFacade  {
      */
     public void requestCreatePage() {
         // TODO implement here
+        // look up sequence diagram
     }
 
     /**
@@ -86,6 +95,7 @@ public class SBLogicFacade  {
      */
     public void requestRoomCreate() {
         // TODO implement here
+        controller.reqRoomCreate();
     }
 
     /**
@@ -93,6 +103,7 @@ public class SBLogicFacade  {
      */
     public void deleteRoomReq() {
         // TODO implement here
+        controller.deleteRoomReq();
     }
 
     /**
@@ -100,6 +111,7 @@ public class SBLogicFacade  {
      */
     public void joinRoomReq() {
         // TODO implement here
+        controller.joinRoomReq();
     }
 
     /**
@@ -107,6 +119,7 @@ public class SBLogicFacade  {
      */
     public void hidePass() {
         // TODO implement here
+        controller.hashPass();
     }
 
 }
