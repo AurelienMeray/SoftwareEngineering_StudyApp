@@ -39,13 +39,13 @@ class Dashboard extends Component {
                     <div className="row">
                         <div className="col s12 m6">
                             <RoomList/>
-                            <ul>
+                            {/* <ul>
                                 {items.map(item => (
                                     <li key={item.id}>
                                         Room: {item.name} | Subject: {item.subject}
                                     </li>
                                 ))};
-                            </ul>
+                            </ul> */}
                         </div>
                         <div className="col s12 m5 offset-m1">
                             <Notifications/>

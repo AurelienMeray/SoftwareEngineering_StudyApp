@@ -78,7 +78,7 @@ public class LogicFacade {
     /**
      *
      */
-    @GetMapping(path = "searchrooms")
+    @GetMapping(path = "SearchRoom")
     public int requestSearchPage() {
         return controller.requestPage("searchrooms");
         // react implements pages?
@@ -106,8 +106,9 @@ public class LogicFacade {
     /**
      *
      */
-    @GetMapping(path = "joinedrooms")
-    public List<Room> returnRooms(String username) {
+    @GetMapping(path = "{username}/Dashboard")
+    public List<Room> returnRooms(@PathVariable ("username") String username) {
+
         return controller.returnRooms(username);
     }
 
