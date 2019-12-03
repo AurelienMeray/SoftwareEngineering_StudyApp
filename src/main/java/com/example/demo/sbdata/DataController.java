@@ -101,7 +101,7 @@ public class DataController {
             result = 1;
         } catch (DataAccessException e) {
             Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return result;
     }
@@ -125,7 +125,7 @@ public class DataController {
             result = 1;
         } catch (DataAccessException e) {
             Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return result;
     }
@@ -154,7 +154,7 @@ public class DataController {
             result = 1;
         } catch (DataAccessException e) {
             Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return result;
     }
@@ -183,8 +183,16 @@ public class DataController {
 
     public List<Room> getAllRoomsJoinedByUser(User user) {
         //TODO: fix this query
-        return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\" r u WHERE ",
-                            new Object[]{},
+        return getResultSet(
+                "SELECT sq.room_id, sq.room_admin, sq.room_name, sq.subject, sq.location, sq.description\n" +
+                "FROM (\n" +
+                "   SELECT r.room_id, r.room_admin, r.room_name, r.subject, r.location, r.description, ur.username\n" +
+                "   FROM \"sbdatabase\".\"ROOM\" r\n" +
+                "   INNER JOIN \"sbdatabase\".\"USERROOM\" ur\n" +
+                "   ON r.room_id = ur.room_id \n" +
+                ") sq\n" +
+                "WHERE sq.username = ?; ",
+                            new Object[]{user.getUserName()},
                             new RoomRowMapper());
     }
 
@@ -202,7 +210,7 @@ public class DataController {
             result = 1;
         } catch (DataAccessException e) {
             Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return result;
     }
@@ -217,7 +225,8 @@ public class DataController {
     }
 
     public User getRoomAdminInfo(Room room) {
-        String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u, \"sbdatabase\".\"ROOM\" r WHERE r.room_ID = ? AND u.username = r.room_Admin";
+        String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u, \"sbdatabase\".\"ROOM\" r " +
+                "WHERE r.room_ID = ? AND u.username = r.room_Admin";
         User result = getFirstResult(sql,
                 new Object[]{room.getRoomId()},
                 new UserRowMapper());

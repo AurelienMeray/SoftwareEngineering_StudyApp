@@ -59,6 +59,7 @@ public class LogicFacade {
     /**
      *
      */
+    @GetMapping(path = "register")
     public int requestRegPage() {
         // TODO implement here
         //react handles page?
@@ -77,6 +78,7 @@ public class LogicFacade {
     /**
      *
      */
+    @GetMapping(path = "searchrooms")
     public int requestSearchPage() {
         return controller.requestPage("searchrooms");
         // react implements pages?
@@ -96,8 +98,17 @@ public class LogicFacade {
     /**
      *
      */
+    @GetMapping(path = "createrooms")
     public int requestCreatePage() {
         return controller.requestPage("createroom");
+    }
+
+    /**
+     *
+     */
+    @GetMapping(path = "joinedrooms")
+    public List<Room> returnRooms(String username) {
+        return controller.returnRooms(username);
     }
 
     /**

@@ -29,7 +29,7 @@ public class UserController {
      */
 
     @GetMapping(path="roomtest")
-    public int userInfoTest() {
+    public List<Room> userInfoTest() {
         User joe = new User("joeshmoe", "joe", "schmoe", "email1", "passWord");
         User mac = new User("macintosh", "mac", "intosh", "email2", "passWord");
 
@@ -40,9 +40,7 @@ public class UserController {
 
         User marv = new User("marv", "marvin", "torres", "email3", "password");
 
-        testService.requestReg(joe);
-
-        testService.requestReg(mac);
+        return testService.returnRooms("macintosh");
 
         /*
         if (result == 0) return null;
@@ -83,7 +81,7 @@ public class UserController {
 
         return testService.requestRooms(subject);
         */
-        return 1;
+        //return 1;
     }
 
     /*

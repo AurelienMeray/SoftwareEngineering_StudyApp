@@ -104,7 +104,6 @@ public class LogicController {
         try {
             if (ps == 1) {
                 user.setPassword(hashPass(user.getPassword()));
-                System.out.println(user.getPassword());
                 return db.requestReg(user);
             }
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
