@@ -159,6 +159,12 @@ public class DataController {
         return result;
     }
 
+
+    /**
+     * Returns all the rooms that the user has joined.
+     * @param user topic of the room being searched for
+     * @return the list of rooms that match the subject
+     */
     public User getUserInfo(User user) {
         if (user == null) {
             throw new IllegalArgumentException("username cannot be null");
@@ -181,6 +187,11 @@ public class DataController {
         return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\"", new RoomRowMapper());
     }
 
+    /**
+     * Returns all the rooms that the user has joined.
+     * @param user the user in question
+     * @return the list of rooms that the user has joined
+     */
     public List<Room> getAllRoomsJoinedByUser(User user) {
         //TODO: fix this query
         return getResultSet(
@@ -196,6 +207,13 @@ public class DataController {
                             new RoomRowMapper());
     }
 
+    /**
+     * Checks if user passed is admin of the room passed,
+     * if so room is removed from DB
+     * @param user the user in question
+     * @param room the room to be deleted
+     * @return 0 if failed, 1 if passed
+     */
     public int deleteRoom(User user, Room room) {
         if (room == null) {
             throw new IllegalArgumentException();
@@ -215,6 +233,11 @@ public class DataController {
         return result;
     }
 
+    /**
+     * Returns all the rooms that match subject string
+     * @param subject topic of the room being searched for
+     * @return the list of rooms that match the subject
+     */
     public List<Room> queryRooms(String subject) {
         Room request = new Room();
         request.setSubject(subject);
@@ -224,6 +247,11 @@ public class DataController {
         return resultSet;
     }
 
+    /**
+     * Returns the user that admins a room
+     * @param room topic of the room being searched for
+     * @return the user who is the admin of the room passed
+     */
     public User getRoomAdminInfo(Room room) {
         String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u, \"sbdatabase\".\"ROOM\" r " +
                 "WHERE r.room_ID = ? AND u.username = r.room_Admin";
@@ -236,6 +264,9 @@ public class DataController {
         return result;
     }
 
+    /**
+     * Debugging method, clears Database
+     */
     public void clearAllData() {
         //for test set up purposes
         update("DELETE FROM \"sbdatabase\".\"USERROOM\"");
