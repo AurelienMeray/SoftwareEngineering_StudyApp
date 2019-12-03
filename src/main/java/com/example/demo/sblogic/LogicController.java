@@ -1,15 +1,21 @@
 package com.example.demo.sblogic;
 
-import java.util.*;
+import com.example.demo.sbdata.DataFacade;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.*;
+@Component //singleton stereotype for spring boot
 public class LogicController {
 
     //singleton setup
     private static LogicController instance;
+    private DataFacade db;
 
     /**
      * Default constructor
      */
+    @Autowired
     public LogicController() {
 
     }
