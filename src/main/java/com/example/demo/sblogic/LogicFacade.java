@@ -1,14 +1,28 @@
 package com.example.demo.sblogic;
 
+import com.example.demo.model.Room;
+import com.example.demo.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.UUID;
+
+@RequestMapping("/api/studybud")
+@RestController
 public class LogicFacade {
 
-    //Instantiate with singleton method
-    LogicController controller = LogicController.getInstance();
+    //Instantiate controller with singleton method
+    LogicController controller;// = LogicController.getInstance();
 
     /**
      * Default constructor
      */
-    public LogicFacade() {
+    @Autowired
+    public LogicFacade(LogicController controller) {
+        this.controller = controller;
 
     }
 
@@ -33,9 +47,10 @@ public class LogicFacade {
     /**
      *
      */
-    public void verifyLoginRequest() {
+    @PostMapping(path = "login")
+    public int verifyLoginRequest(@Valid @NonNull @RequestBody User user) {
         // TODO implement here
-        controller.verifyLogin();
+        return controller.verifyLoginRequest(user);
     }
 
     /**
@@ -60,9 +75,10 @@ public class LogicFacade {
     /**
      *
      */
-    public void requestReg() {
+    @PostMapping (path = "register")
+    public int requestReg(@Valid @NonNull @RequestBody User user) {
         // TODO implement here
-        controller.requestReg();
+        return controller.requestReg(user);
     }
 
     /**
@@ -76,9 +92,10 @@ public class LogicFacade {
     /**
      *
      */
-    public void requestSearch() {
+    @GetMapping (path = "SearchRoom/{subject}")
+    public List<Room> requestSearch(@PathVariable ("subject") String subject) {
         // TODO implement here
-        controller.requestSearch();
+        return controller.requestSearch(subject);
 
     }
 
@@ -93,25 +110,41 @@ public class LogicFacade {
     /**
      *
      */
-    public void requestRoomCreate() {
-        // TODO implement here
-        controller.reqRoomCreate();
+    @PostMapping (path = "{username}/CreateRoom")
+    public int requestRoomCreate(@PathVariable ("username") String username,
+                                  @Valid @NonNull @RequestBody Room room) {
+
+        User admin = new User();
+        admin.setUserName(username);
+        return controller.reqRoomCreate(admin, room);
     }
 
     /**
      *
      */
-    public void deleteRoomReq() {
+    @DeleteMapping (path = "{username}/{roomID}/DeleteRoom")
+    public int deleteRoomReq(@PathVariable ("username") String username,
+                             @PathVariable ("roomID") UUID roomID) {
         // TODO implement here
-        controller.deleteRoomReq();
+        User user = new User();
+        user.setUserName(username);
+        Room room = new Room();
+        room.setRoomId(roomID);
+        return controller.deleteRoomReq(user, room);
     }
 
     /**
      *
      */
-    public void joinRoomReq() {
+    @PostMapping (path = "{username}/{roomID}/JoinRoom")
+    public int joinRoomReq(@PathVariable ("username") String username,
+                            @PathVariable ("roomID") UUID roomID) {
         // TODO implement here
-        controller.joinRoomReq();
+        User user = new User();
+        user.setUserName(username);
+        Room room = new Room();
+        room.setRoomId(roomID);
+        return controller.joinRoomReq(user, room);
     }
 
     /**

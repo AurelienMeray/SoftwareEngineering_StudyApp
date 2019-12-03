@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@RequestMapping("/api/studybud")
-@RestController
+//@RequestMapping("/api/studybud")
+//@RestController
 public class UserController {
     private final DataFacade testService;
 
-    @Autowired
+    //@Autowired
     public UserController(DataFacade testService) {
         this.testService = testService;
     }
@@ -27,7 +27,7 @@ public class UserController {
     }
      */
 
-    @GetMapping(path="{roomtest}")
+    //@GetMapping(path="{roomtest}")
     public List<Room> userInfoTest() {
         User joe = new User("joeshmoe", "joe", "schmoe", "email1", "password");
         User mac = new User("macintosh", "mac", "intosh", "email2", "password");
