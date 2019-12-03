@@ -81,7 +81,7 @@ public class DataController {
 
     /**
      * Adds a user to the user table.
-     *
+     * @param user user to be added
      * @return 0 if failed, 1 if succeeded
      */
     public int saveUser(User user) {
@@ -106,6 +106,12 @@ public class DataController {
         return result;
     }
 
+    /**
+     *  Creates new room affiliated with user
+     *  @param user the user that can update the room
+     *  @param room the room to add
+     *  @return 1 if success, 0 if failed
+     */
     public int saveRoom(User user, Room room) {
         if (user == null || room == null) {
             throw new IllegalArgumentException("User and room cannot be null");
@@ -134,8 +140,8 @@ public class DataController {
      *  Adds a room to this user's room list.
      *  @param user the user that will be part of the room
      *  @param room the room to add
+     *  @return 1 if success, 0 if failed
      */
-
     public int updateUserRooms(User user, Room room) {
         if (user == null || room == null) {
             throw new IllegalArgumentException("User and room cannot be null");
