@@ -33,6 +33,7 @@ public class LogicController {
      */
     public void requestPage() {
         // TODO implement here
+        // sequence diagram
     }
 
     /**
@@ -40,6 +41,7 @@ public class LogicController {
      */
     public void verifyLoginRequest() {
         // TODO implement here
+        instance.verifyLogin();
     }
 
     /**
@@ -75,6 +77,8 @@ public class LogicController {
      */
     public void requestReg() {
         // TODO implement here
+        instance.confirmReg();
+        instance.verifyPass();
     }
 
     /**
@@ -96,6 +100,7 @@ public class LogicController {
      */
     public void requestSearch() {
         // TODO implement here
+        instance.returnRooms();
     }
 
     /**
@@ -110,6 +115,8 @@ public class LogicController {
      */
     public void reqRoomCreate() {
         // TODO implement here
+        instance.confirmRoom();
+        instance.generateRoomID();
     }
 
     /**
@@ -131,6 +138,7 @@ public class LogicController {
      */
     public void deleteRoomReq() {
         // TODO implement here
+        instance.confirmDelete();
     }
 
     /**
@@ -160,5 +168,5 @@ public class LogicController {
     public void hashPass() {
         // TODO implement here
     }
-
+    
 }
