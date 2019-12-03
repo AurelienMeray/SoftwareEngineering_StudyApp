@@ -12,9 +12,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-
-
 import java.util.*;
+
 @Component //singleton stereotype for spring boot
 public class LogicController {
 
