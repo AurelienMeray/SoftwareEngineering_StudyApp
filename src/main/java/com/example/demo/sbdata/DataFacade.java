@@ -20,7 +20,9 @@ public class DataFacade {
     }
 
     /**
-     *
+     * Obtains a user's login information.
+     * @param userName the username
+     * @return the user's information
      */
     public User reqLoginInfo(String userName) {
         User request = new User();
@@ -30,7 +32,9 @@ public class DataFacade {
     }
 
     /**
-     *
+     * Adds a user to the member list.
+     * @param user the user to add
+     * @return a 1 if succeeded, or 0 if failed (user already exists)
      */
     public int requestReg(User user) {
         int result = db.saveUser(user);
