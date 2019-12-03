@@ -56,7 +56,9 @@ public class LogicController {
     }
 
     /**
-     *
+     * Verifies username and password match
+     * @param user user to be tested
+     * @return 0 if failed, 1 if succeeded
      */
     private int verifyLogin(User user) {
         User dbUser = db.reqLoginInfo(user.getUserName());
@@ -113,7 +115,9 @@ public class LogicController {
     }
 
     /**
-     *
+     * Verifies password fits criteria
+     * @param pass password to be tested
+     * @return 0 if failed, 1 if succeeded
      */
     public int verifyPass(String pass) {
         //string test pass
@@ -132,21 +136,29 @@ public class LogicController {
     }
 
     /**
-     *  Returns the rooms that the user has joined
+     * Returns list of rooms user is a member of
+     * @param username user to be tested
+     * @return list of rooms
      */
     public List<Room> returnRooms(String username) {
         return db.returnRooms(username);
     }
 
     /**
-     *
+     * Creates room with user as admin
+     * @param user user to be passed as admin
+     * @param room room to be created
+     * @return 0 if failed, 1 if succeeded
      */
     public int reqRoomCreate(User user, Room room) {
         return db.createRoom(user, room);
     }
 
     /**
-     *
+     * Deletes room if user is admin
+     * @param user user to be tested
+     * @param room room to be deleted
+     * @return 0 if failed, 1 if succeeded
      */
     public int deleteRoomReq(User user, Room room) {
         return db.deleteRoom(user, room);
@@ -161,7 +173,10 @@ public class LogicController {
 
 
     /**
-     *
+     * Encrypts plaintext password
+     * @param passwordToHash plaintext password
+     * @param salt byte array for encryption algorithm
+     * @return string of encrypted password
      */
     private String hashPass(String passwordToHash, byte[] salt){
         String generatedPassword = null;
