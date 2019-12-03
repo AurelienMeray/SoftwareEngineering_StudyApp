@@ -81,6 +81,7 @@ public class Room {
 
     @Override
     public boolean equals(Object other) {
+        if (other == null || this.getClass() != other.getClass()) return false;
         Room otherRoom = (Room) other;
         boolean equals = this.roomId == otherRoom.roomId;
         return equals;

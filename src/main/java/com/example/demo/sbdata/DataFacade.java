@@ -69,6 +69,19 @@ public class DataFacade {
         return result;
     }
 
+    public User returnUserInfo(String username) {
+        User user = new User();
+        user.setFirstName(username);
+        User fullUser = db.getUserInfo(user);
+        return fullUser;
+    }
+
+    public List<Room> returnRooms(String username) {
+        User user = new User();
+        user.setUserName(username);
+        return db.getAllRoomsJoinedByUser(user);
+    }
+
     public void clearAllData() {
         db.clearAllData();
     }

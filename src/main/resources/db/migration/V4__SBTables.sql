@@ -4,7 +4,7 @@ CREATE TABLE "USER"
     first_name    varchar(50)    NOT NULL,
     last_name     varchar(50)    NOT NULL,
     email         varchar(50)    NOT NULL    UNIQUE,
-    password      varchar(50)    NOT NULL,
+    password      varchar(512)   NOT NULL,
     CONSTRAINT    USERPK
        PRIMARY KEY (username)
 );

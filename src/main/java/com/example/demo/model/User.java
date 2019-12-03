@@ -66,6 +66,7 @@ public class User {
 
     @Override
     public boolean equals(Object other) {
+        if (other == null || this.getClass() != other.getClass()) return false;
         User otherUser = (User) other;
         boolean equals = this.userName.equals(otherUser.userName);
         return equals;

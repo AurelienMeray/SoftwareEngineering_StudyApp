@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Repository
 public class DataController {
@@ -98,6 +100,7 @@ public class DataController {
             });
             result = 1;
         } catch (DataAccessException e) {
+            Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
             e.printStackTrace();
         }
         return result;
@@ -121,12 +124,13 @@ public class DataController {
             updateUserRooms(user, room);
             result = 1;
         } catch (DataAccessException e) {
+            Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
             e.printStackTrace();
         }
         return result;
     }
 
-    /*
+    /**
      *  Adds a room to this user's room list.
      *  @param user the user that will be part of the room
      *  @param room the room to add
@@ -149,17 +153,16 @@ public class DataController {
             });
             result = 1;
         } catch (DataAccessException e) {
+            Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
             e.printStackTrace();
         }
         return result;
     }
 
-
     public User getUserInfo(User user) {
         if (user == null) {
             throw new IllegalArgumentException("username cannot be null");
         }
-        System.out.println(user.getUserName());
         User loginInfo;
         String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u WHERE u.username = ?";
         loginInfo = getFirstResult(sql, new Object[]{user.getUserName()}, new UserRowMapper());
@@ -178,6 +181,13 @@ public class DataController {
         return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\"", new RoomRowMapper());
     }
 
+    public List<Room> getAllRoomsJoinedByUser(User user) {
+        //TODO: fix this query
+        return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\" r u WHERE ",
+                            new Object[]{},
+                            new RoomRowMapper());
+    }
+
     public int deleteRoom(User user, Room room) {
         if (room == null) {
             throw new IllegalArgumentException();
@@ -191,6 +201,7 @@ public class DataController {
             update(sql, new Object[]{room.getRoomId()});
             result = 1;
         } catch (DataAccessException e) {
+            Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
             e.printStackTrace();
         }
         return result;

@@ -5,6 +5,14 @@ import com.example.demo.model.Room;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+
 
 import java.util.*;
 @Component //singleton stereotype for spring boot
@@ -25,19 +33,12 @@ public class LogicController {
 
     }
 
-//    public static LogicController getInstance(){
-//        if(instance == null){
-//            instance = new LogicController();
-//        }
-//        return instance;
-//    }
-
-
     /**
      *
      */
-    public void requestPage() {
-        // TODO implement here
+    public int requestPage(String toOpen) {
+        return 1;
+        //TODO: figure out whether the user is authorized at this point
         // sequence diagram
     }
 
@@ -45,59 +46,69 @@ public class LogicController {
      *
      */
     public int verifyLoginRequest(User user) {
-        // TODO implement here
         return verifyLogin(user);
-
     }
 
     /**
      *
      */
-    public void returnUserInfo() {
-        // TODO implement here
+    public User returnUserInfo(String username) {
+        return db.returnUserInfo(username);
     }
 
     /**
      *
      */
     private int verifyLogin(User user) {
-        // TODO implement here
-        User dbuser = db.reqLoginInfo(user.getUserName());
-        user.getPassword().equals(dbuser.getPassword());
-        if(user.getUserName().equals(dbuser.getUserName())){
-            if(user.getPassword().equals(dbuser.getPassword())){
-                return 1;
+        User dbUser = db.reqLoginInfo(user.getUserName());
+
+        if (dbUser.getUserName() == null) return 0;
+
+        try {
+            user.setPassword(hashPass(user.getPassword()));
+            if (user.getUserName().equals(dbUser.getUserName())) {
+                if (user.getPassword().equals(dbUser.getPassword())) {
+                    return 1;
+                }
             }
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            System.out.println("What");
+            e.printStackTrace();
         }
         return 0;
+    }
+
+    private String hashPass(String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        return hashPass(password, new byte[]{104,28,39,40,-46,-80,-128,127,49,10});
     }
 
     /**
      *
      */
     public void endSessionRequest() {
-        // TODO implement here
+
     }
 
     /**
      *
      */
     public void endSession() {
-        // TODO implement here
+
     }
 
     /**
      *
      */
     public int requestReg(User user) {
-        // TODO implement here
-        //db.clearAllData(); //for debugging remove later
-
         int ps = this.verifyPass(user.getPassword());
-
-
-        if(ps == 1){
-            return db.requestReg(user);
+        try {
+            if (ps == 1) {
+                user.setPassword(hashPass(user.getPassword()));
+                System.out.println(user.getPassword());
+                return db.requestReg(user);
+            }
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+            e.printStackTrace();
         }
 
         return 0;
@@ -106,19 +117,10 @@ public class LogicController {
     /**
      *
      */
-//    public void confirmReg() {
-//        // TODO implement here
-//    }
-
-    /**
-     *
-     */
     public int verifyPass(String pass) {
-
         //string test pass
         //if password valid return 1
-        if (pass.length() >= 8){
-            // TODO check if capital letter exists
+        if (pass.length() > 7 && pass.matches("[a-zA-Z_0-9]*[A-Z]+[a-zA-Z_0-9]*")) {
             return 1;
         }
         return 0;
@@ -128,79 +130,57 @@ public class LogicController {
      *
      */
     public List<Room> requestSearch(String subject) {
-        // TODO implement here
         return db.requestRooms(subject);
-        //instance.returnRooms();
     }
 
     /**
-     *
+     *  Returns the rooms that the user has joined
      */
-    public void returnRooms() {
-        // TODO implement here
+    public List<Room> returnRooms(String username) {
+        return db.returnRooms(username);
     }
 
     /**
      *
      */
     public int reqRoomCreate(User user, Room room) {
-
         return db.createRoom(user, room);
-        //instance.confirmRoom();
-        //instance.generateRoomID();
-    }
-
-    /**
-     *
-     */
-    public void generateRoomID() {
-        // TODO implement here
-    }
-
-    /**
-     *
-     */
-    public void confirmRoom() {
-        // TODO implement here
-        //this.reqRoomCreate();
     }
 
     /**
      *
      */
     public int deleteRoomReq(User user, Room room) {
-
         return db.deleteRoom(user, room);
-
     }
-
-    /**
-     *
-     */
-//    public void confirmDelete() {
-//        // TODO implement here
-//    }
 
     /**
      *
      */
     public int joinRoomReq(User user, Room room) {
-        // TODO implement here
         return db.connectUserRoom(user, room);
     }
 
-    /**
-     *
-     */
-//    public void confirmJoin() {
-//        // TODO implement here
-//    }
 
     /**
      *
      */
-    public void hashPass() {
-        // TODO implement here
+    private String hashPass(String passwordToHash, byte[] salt){
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt);
+            byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++){
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+        return generatedPassword;
     }
 
 }

@@ -3,19 +3,20 @@ package com.example.demo.api;
 import com.example.demo.model.Room;
 import com.example.demo.model.User;
 import com.example.demo.sbdata.DataFacade;
+import com.example.demo.sblogic.LogicFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-//@RequestMapping("/api/studybud")
-//@RestController
+@RequestMapping("/api/tests")
+@RestController
 public class UserController {
-    private final DataFacade testService;
+    private final LogicFacade testService;
 
     //@Autowired
-    public UserController(DataFacade testService) {
+    public UserController(LogicFacade testService) {
         this.testService = testService;
     }
 
@@ -27,10 +28,10 @@ public class UserController {
     }
      */
 
-    //@GetMapping(path="{roomtest}")
-    public List<Room> userInfoTest() {
-        User joe = new User("joeshmoe", "joe", "schmoe", "email1", "password");
-        User mac = new User("macintosh", "mac", "intosh", "email2", "password");
+    @GetMapping(path="roomtest")
+    public int userInfoTest() {
+        User joe = new User("joeshmoe", "joe", "schmoe", "email1", "passWord");
+        User mac = new User("macintosh", "mac", "intosh", "email2", "passWord");
 
         Room joeRoom = new Room("test1", "cs", "location", "desc");
         Room macRoom = new Room("test2", "calc", "location", "desc");
@@ -39,16 +40,11 @@ public class UserController {
 
         User marv = new User("marv", "marvin", "torres", "email3", "password");
 
-        testService.clearAllData();
+        testService.requestReg(joe);
 
-        int result;
+        testService.requestReg(mac);
 
-        result = testService.requestReg(joe);
-
-        if (result == 0) return null;
-
-        result = testService.requestReg(mac);
-
+        /*
         if (result == 0) return null;
 
         result = testService.requestReg(marv);
@@ -86,6 +82,8 @@ public class UserController {
         if (result == 0) System.out.println("good");
 
         return testService.requestRooms(subject);
+        */
+        return 1;
     }
 
     /*

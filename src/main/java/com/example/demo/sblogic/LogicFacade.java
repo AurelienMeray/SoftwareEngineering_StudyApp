@@ -14,8 +14,7 @@ import java.util.UUID;
 @RestController
 public class LogicFacade {
 
-    //Instantiate controller with singleton method
-    LogicController controller;// = LogicController.getInstance();
+    private LogicController controller;
 
     /**
      * Default constructor
@@ -26,23 +25,17 @@ public class LogicFacade {
 
     }
 
-
     /**
      *
      */
-    public void requestLoginPage() {
-        // TODO implement here
-        //controller.requestPage(LoginPage);
-        //react frontend already handles pulling up loginpage?
+    public int requestLoginPage() {
+        return controller.requestPage("loginuser");
     }
 
-    /**
-     *
-     */
-    public void displayRequest() {
-        // TODO implement here
-        // sequence diagram
+    public User getUserInfo(String username) {
+        return controller.returnUserInfo(username);
     }
+
 
     /**
      *
@@ -66,10 +59,10 @@ public class LogicFacade {
     /**
      *
      */
-    public void requestRegPage() {
+    public int requestRegPage() {
         // TODO implement here
         //react handles page?
-        controller.requestPage();
+        return controller.requestPage("createuser");
     }
 
     /**
@@ -84,9 +77,10 @@ public class LogicFacade {
     /**
      *
      */
-    public void requestSearchPage() {
-        // TODO implement here
+    public int requestSearchPage() {
+        return controller.requestPage("searchrooms");
         // react implements pages?
+        // I am guessing they check to see if the user is authorized to view that page?
     }
 
     /**
@@ -102,9 +96,8 @@ public class LogicFacade {
     /**
      *
      */
-    public void requestCreatePage() {
-        // TODO implement here
-        // look up sequence diagram
+    public int requestCreatePage() {
+        return controller.requestPage("createroom");
     }
 
     /**
@@ -150,9 +143,8 @@ public class LogicFacade {
     /**
      *
      */
-    public void hidePass() {
-        // TODO implement here
-        controller.hashPass();
+    private void hidePass() {
+        //TODO: figure out what to do here
     }
 
 }
