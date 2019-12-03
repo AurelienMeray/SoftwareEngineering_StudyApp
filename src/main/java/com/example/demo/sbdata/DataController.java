@@ -24,6 +24,13 @@ public class DataController {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Returns the first result of a select query.
+     * @param sql the sql query
+     * @param rowMapper a row mapper that extracts objects of a specified type from a result set
+     * @param <T> the type of object to extract from the result set
+     * @return the first result in the requested type if at least one result returned, null if none returned
+     */
     public <T> T getFirstResult(String sql, RowMapper rowMapper) {
         List<T> resultSet = jdbcTemplate.query(sql,
                 rowMapper);
@@ -35,6 +42,14 @@ public class DataController {
         return resultSet.get(0);
     }
 
+    /**
+     * Returns the first result of a select query using custom arguments.
+     * @param sql the sql query
+     * @param params the arguments of the query
+     * @param rowMapper a row mapper that extracts objects of a specified type from a result set
+     * @param <T> the type of object to extract from the result set
+     * @return the first result in the requested type if at least one result returned, null if none returned
+     */
     public <T> T getFirstResult(String sql, Object[] params, RowMapper rowMapper) {
         List<T> resultSet = jdbcTemplate.query(sql,
                 params,
@@ -47,12 +62,27 @@ public class DataController {
         return resultSet.get(0);
     }
 
+    /**
+     * Returns the result set of a select query.
+     * @param sql the sql query
+     * @param rowMapper a row mapper that extracts objects of a specified type from a result set
+     * @param <T> the type of object to extract from the result set
+     * @return a list of objects of a requested type
+     */
     public <T> List<T> getResultSet(String sql, RowMapper rowMapper) {
         List<T> resultSet = jdbcTemplate.query(sql,
                 rowMapper);
         return resultSet;
     }
 
+    /**
+     * Returns the result set of a select query using custom arguments.
+     * @param sql the sql query
+     * @param params the arguments of the query
+     * @param rowMapper a row mapper that extracts objects of a specified type from a result set
+     * @param <T> the type of object to extract from the result set
+     * @return a list of objects of a requested type
+     */
     public <T> List<T> getResultSet (String sql, Object[] params, RowMapper rowMapper) {
         List<T> resultSet = jdbcTemplate.query(sql,
                 params,
@@ -60,10 +90,19 @@ public class DataController {
         return resultSet;
     }
 
+    /**
+     * Updates the database using custom arguments. Can be used to add, remove, or update table entries.
+     * @param sql the sql query
+     * @param params the arguments of the query
+     */
     public void update(String sql, Object[] params) {
         jdbcTemplate.update(sql, params);
     }
 
+    /**
+     * Updates the database. Can be used to add, remove, or update table entries.
+     * @param sql the sql query
+     */
     public void update(String sql) {
         jdbcTemplate.update(sql);
     }
