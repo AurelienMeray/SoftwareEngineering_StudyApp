@@ -49,6 +49,14 @@ public class LogicFacade {
     /**
      *
      */
+    @GetMapping(path = "{username}/login")
+    public User verifiedUser(@PathVariable ("username") String username){
+        return controller.returnUserInfo(username);
+    }
+
+    /**
+     *
+     */
     public void endSessionRequest() {
         // TODO implement here
         controller.endSessionRequest();
@@ -71,7 +79,6 @@ public class LogicFacade {
      */
     @PostMapping (path = "register")
     public int requestReg(@Valid @NonNull @RequestBody User user) {
-        // TODO implement here
         return controller.requestReg(user);
     }
 
