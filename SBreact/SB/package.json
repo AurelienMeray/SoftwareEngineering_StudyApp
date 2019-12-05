@@ -2,7 +2,7 @@
   "name": "sb",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/signin",
+  "homepage": "http://localhost:3000/signin",
   "dependencies": {
     "mobx": "^5.15.0",
     "mobx-react": "^6.1.4",

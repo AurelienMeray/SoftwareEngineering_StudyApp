@@ -4,13 +4,13 @@ import RoomList from '../room/RoomList'
 
 class Dashboard extends Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            items: [],
-            isLoaded: false,
-        }
-    }
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         items: [],
+    //         isLoaded: false,
+    //     }
+    // }
 
     // componentDidMount(){
 
