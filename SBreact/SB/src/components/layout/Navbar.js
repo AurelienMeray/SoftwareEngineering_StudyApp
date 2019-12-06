@@ -8,7 +8,7 @@ const Navbar = () => {
     return(  
         <nav className="nav-wrapper blue darken-3">
             <div className="container">
-                <Link to='/' className="brand-logo">
+                <Link to='/signin' className="brand-logo">
                     <img width="160" alt='StuddyBud' src={mainLogo}></img>
                 </Link>
                 <SignedInLinks/>

@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
+import UserStore from '../../stores/UserStore'
 
 class SignIn extends Component {
 
-    state = {
-        username: '',
-        password: '',
+    constructor(props){
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+            buttonDisabled: false
+        }
     }
+
+    
 
     handleChange = (e) => {
         this.setState({
@@ -18,6 +25,92 @@ class SignIn extends Component {
         e.preventDefault();
         console.log(this.state);
     }
+
+    resetForm() {
+        this.setState ({
+            username: '',
+            password: '',
+            buttonDisabled: false
+        })
+    }
+
+    async doLogin() {
+
+        if(!this.state.username){
+            return;
+        }
+        if(!this.state.password){
+            return;
+        }
+
+        this.setState({
+            buttonDisabled: true
+        })
+
+        try {
+
+            let res = await fetch('localhost:8080/api/studybud/login', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: this.state.username,
+                    password: this.state.password
+                })
+            });
+
+            let result = await res.json();
+
+            if (result == 1){
+                UserStore.isLoggedIn = true;
+                UserStore.username = result.username;
+            }
+            else if (result == 0){
+                this.resetForm();
+                alert(result.msg);
+            }
+        }
+
+        catch(e) {
+            console.log(e);
+            this.resetForm();
+        }
+    }
+
+    async componentDidMount() {
+
+        try {
+          let res = await fetch('/isLoggedIn', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            }
+          });
+    
+          let result = await res.json();
+    
+          if (result && result.success) {
+            UserStore.loading = false;
+            UserStore.isLoggedIn = true;
+            UserStore.username = result.username;
+          }
+          else {
+            UserStore.loading = false;
+            UserStore.isLoggedIn = false;
+          }
+    
+        }
+    
+        catch(e) {
+          UserStore.loading = false;
+          UserStore.isLoggedIn = false;
+    
+        }
+    
+      }
 
     render() {
         return (
@@ -34,7 +127,10 @@ class SignIn extends Component {
                         <input type="password" id="password" onChange={this.handleChange}/>
                     </div>
                     <div className="input-field">
-                        <button className="btn blue lighten-1 z-depth-0">Login</button>
+                        <button 
+                        disabled={this.state.buttonDisabled}
+                        onClick={() => this.doLogin()}
+                        className="btn blue lighten-1 z-depth-0">Login</button>
 
                     </div>
                 </form>
