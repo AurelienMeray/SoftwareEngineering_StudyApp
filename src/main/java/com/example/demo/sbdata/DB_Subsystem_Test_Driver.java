@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 /**
  * Contains the methods for testing the StudyBud database subsystem.
  */
-public class DBTestDriver {
+public class DB_Subsystem_Test_Driver {
 
     // The DataFacade that will make calls to the mocked DataController.
     @Autowired
