@@ -20,7 +20,7 @@ class DB_Unit_Test_Driver {
 
 
     @Test
-    void test_saveUser() {
+    void saveUserTest() {
         repo.clearAllData();
         User user = new User("Bob123",
                 "Bob","Stein","Bob123@gmail.com","ValidPass1");
@@ -30,7 +30,8 @@ class DB_Unit_Test_Driver {
     }
 
     @Test
-    void test_saveRoom() {
+    void saveRoomTest() {
+        //repo.clearAllData();
         User user = new User("Bob123",
                 "Bob","Stein","Bob123@gmail.com","ValidPass1");
         Room room = new Room("Chem","Chemistry","FIU","Chem Club!");
@@ -39,7 +40,7 @@ class DB_Unit_Test_Driver {
     }
 
     @Test
-    void test_getUserInfo() {
+    void getUserInfoTest() {
         User user = new User("Bob123",
                 "Bob","Stein","Bob123@gmail.com","ValidPass1");
         User resultUser = repo.getUserInfo(user);
@@ -47,7 +48,7 @@ class DB_Unit_Test_Driver {
     }
 
     @Test
-    void test_getAllRoomsJoinedByUser() {
+    void getAllRoomsJoinedByUserTest() {
         User user = new User("Bob123",
                 "Bob","Stein","Bob123@gmail.com","ValidPass1");
         List<Room> roomInfo = repo.getAllRoomsJoinedByUser(user);
@@ -56,7 +57,7 @@ class DB_Unit_Test_Driver {
     }
 
     @Test
-    void test_deleteRoom() {
+    void deleteRoomTest() {
         //Creates a user
         User user = new User("MickeyMouse",
                 "Mickey","Mouse","mickey@gmail.com","passMickey123");
@@ -72,7 +73,7 @@ class DB_Unit_Test_Driver {
     }
 
     @Test
-    void test_queryRooms() {
+    void queryRoomsTest() {
         User user = new User("johnny",
                 "john","boiii","johnboii@gmail.com","ValidPassword123");
         //Creates a room
@@ -83,7 +84,7 @@ class DB_Unit_Test_Driver {
     }
 
     @Test
-    void getRoomAdminInfo() {
+    void getRoomAdminInfoTest() {
         User user = new User("johnny",
                 "john","boiii","johnboii@gmail.com","ValidPassword123");
         repo.saveUser(user);

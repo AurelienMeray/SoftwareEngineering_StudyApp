@@ -29,11 +29,16 @@ public class Logic_Unit_Test_Driver {
     private DataFacade service;
 
     @Test
-    public void requestPage() {
+    public void authenticateRequestTest(){
+        User user = new User("Joejoe",
+                "Joe","Boe","JoeBoe@gmail.com","JoeisaBoe123");
+        repo.saveUser(user);
+        int result = logicCont.authenticateRequest(user);
+        Assert.assertEquals(1, result);
     }
 
     @Test
-    public void test_verifyLoginRequest() {
+    public void verifyLoginRequestTest() {
         //repo.clearAllData();
         User user = new User("Tester123",
                 "Bob","Stein","Bob123@gmail.com","ValidPass1");
@@ -43,9 +48,8 @@ public class Logic_Unit_Test_Driver {
     }
 
 
-
     @Test
-    public void returnUserInfo() {
+    public void returnUserInfoTest() {
         //repo.clearAllData();
         User user = new User("Aurelien",
                 "Aurelien","Meray","Bob123@gmail.com","ValidPass1");
@@ -55,16 +59,9 @@ public class Logic_Unit_Test_Driver {
 
     }
 
-    @Test
-    public void endSessionRequest() {
-    }
 
     @Test
-    public void endSession() {
-    }
-
-    @Test
-    public void requestReg() {
+    public void requestRegTest() {
         User user = new User("Aurelien",
                 "Aurelien","Meray","Bob123@gmail.com","ValidPass1");
         repo.saveUser(user);
@@ -73,25 +70,17 @@ public class Logic_Unit_Test_Driver {
     }
 
     @Test
-    public void test_1_verifyPass() {
+    public void verifyPassTest1() {
         String testPass = "AurelienIsTheBest123";
         int result = logicCont.verifyPass(testPass);
         Assert.assertEquals(1, result);
     }
 
     @Test
-    public void test_2_verifyPass() {
+    public void verifyPassTest2() {
         String testPass = "notvalid";
         int result = logicCont.verifyPass(testPass);
         Assert.assertEquals(0, result);
-    }
-
-    @Test
-    public void requestSearch() {
-    }
-
-    @Test
-    public void returnRooms() {
     }
 
     @Test
