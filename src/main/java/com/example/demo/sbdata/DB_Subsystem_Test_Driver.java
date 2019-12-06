@@ -27,7 +27,7 @@ public class DB_Subsystem_Test_Driver {
     private DataFacade service;
 
     // The mocked DataController for the purpose of testing.
-    @MockBean
+    @Autowired
     private DataController repo;
 
     /**

@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * DataController is a data access class that performs database retrieval and update
+ * requests using SQL statements on a PostgreSQL database. Note that
+ * this class must be updated if the database is changed.
+ */
 @Repository
 public class DataController {
     private final JdbcTemplate jdbcTemplate;
@@ -107,7 +112,8 @@ public class DataController {
         jdbcTemplate.update(sql);
     }
 
-    public int checkForUser(User user) {
+    /* public int checkForUser(User user) {
+        if (user == null) throw new IllegalArgumentException("user can't be null");
         int result = 0;
         String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u WHERE u.username = ? AND u.password = ?";
         if (getFirstResult(sql,
@@ -116,12 +122,14 @@ public class DataController {
         }
 
         return result;
-    }
+    } */
 
     /**
      * Adds a user to the user table.
+     * PRECONDITION: user is not null.
      * @param user user to be added
      * @return 0 if failed, 1 if succeeded
+     * @throws IllegalArgumentException if user is null
      */
     public int saveUser(User user) {
         if (user == null) {
@@ -147,9 +155,11 @@ public class DataController {
 
     /**
      *  Creates new room affiliated with user
+     *  PRECONDITION: user and room are not null
      *  @param user the user that can update the room
      *  @param room the room to add
      *  @return 1 if success, 0 if failed
+     *  @throws IllegalArgumentException if user or room is null
      */
     public int saveRoom(User user, Room room) {
         if (user == null || room == null) {
@@ -177,9 +187,11 @@ public class DataController {
 
     /**
      *  Adds a room to this user's room list.
+     *  PRECONDITION: user and room are not null
      *  @param user the user that will be part of the room
      *  @param room the room to add
      *  @return 1 if success, 0 if failed
+     *  @throws IllegalArgumentException if user or room is null
      */
     public int updateUserRooms(User user, Room room) {
         if (user == null || room == null) {
@@ -207,8 +219,10 @@ public class DataController {
 
     /**
      * Returns all the rooms that the user has joined.
+     * PRECONDITION: user is not null.
      * @param user topic of the room being searched for
      * @return the list of rooms that match the subject
+     * @throws IllegalArgumentException if user is null
      */
     public User getUserInfo(User user) {
         if (user == null) {
@@ -224,21 +238,23 @@ public class DataController {
         return loginInfo;
     }
 
-    public List<User> getAllUsers() {
+   /* public List<User> getAllUsers() {
         return getResultSet("SELECT * FROM \"sbdatabase\".\"USER\"", new UserRowMapper());
     }
 
     public List<Room> getAllRooms() {
         return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\"", new RoomRowMapper());
-    }
+    } */
 
     /**
      * Returns all the rooms that the user has joined.
+     * PRECONDITION: user is not null.
      * @param user the user in question
      * @return the list of rooms that the user has joined
+     * @throws IllegalArgumentException if user is null
      */
     public List<Room> getAllRoomsJoinedByUser(User user) {
-        //TODO: fix this query
+        if (user == null) throw new IllegalArgumentException("user can't be null");
         return getResultSet(
                 "SELECT sq.room_id, sq.room_admin, sq.room_name, sq.subject, sq.location, sq.description\n" +
                 "FROM (\n" +
@@ -255,13 +271,15 @@ public class DataController {
     /**
      * Checks if user passed is admin of the room passed,
      * if so room is removed from DB
+     * PRECONDITION: user and room are not null.
      * @param user the user in question
      * @param room the room to be deleted
      * @return 0 if failed, 1 if passed
+     * @throws IllegalArgumentException if user or room is null.
      */
     public int deleteRoom(User user, Room room) {
-        if (room == null) {
-            throw new IllegalArgumentException();
+        if (user == null || room == null) {
+            throw new IllegalArgumentException("user and room can't be null");
         }
         User admin = getRoomAdminInfo(room);
         if (!user.equals(admin)) return 0;
@@ -280,10 +298,13 @@ public class DataController {
 
     /**
      * Returns all the rooms that match subject string
+     * PRECONDITION: subject is not null
      * @param subject topic of the room being searched for
      * @return the list of rooms that match the subject
+     * @throws IllegalArgumentException if subject is null
      */
     public List<Room> queryRooms(String subject) {
+        if (subject == null) throw new IllegalArgumentException("subject can't be null");
         Room request = new Room();
         request.setSubject(subject);
         List<Room> resultSet =  getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\" r WHERE r.subject = ?",
@@ -294,10 +315,13 @@ public class DataController {
 
     /**
      * Returns the user that admins a room
+     * PRECONDITION: room is not null
      * @param room topic of the room being searched for
      * @return the user who is the admin of the room passed
+     * @throws IllegalArgumentException if room is null
      */
     public User getRoomAdminInfo(Room room) {
+        if (room == null) throw new IllegalArgumentException("room can't be null");
         String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u, \"sbdatabase\".\"ROOM\" r " +
                 "WHERE r.room_ID = ? AND u.username = r.room_Admin";
         User result = getFirstResult(sql,
