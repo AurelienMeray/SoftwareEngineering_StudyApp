@@ -13,6 +13,13 @@ import SignedOutLinks from './components/layout/SignedOutLinks'
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+        isLoggedIn: false
+    }
+}
+
   
    async componentDidMount() {
 
@@ -33,14 +40,14 @@ class App extends React.Component {
         UserStore.username = result.username;
       }
       else {
-        UserStore.loading = true;
+        UserStore.loading = false;
         UserStore.isLoggedIn = false;
       }
 
     }
 
     catch(e) {
-      UserStore.loading = true;
+      UserStore.loading = false;
       UserStore.isLoggedIn = false;
 
     }
@@ -96,7 +103,7 @@ class App extends React.Component {
         return (
           <BrowserRouter>
             <div className="App">
-              <Navbar/>
+              <Navbar isLoggedIn={true}/>
               {/* Makes sure only one path is loaded at a time*/}
               <Switch>
                 <Route path='/signin' component={SignIn}></Route>
@@ -111,6 +118,28 @@ class App extends React.Component {
             </div>
           </BrowserRouter>
         );
+      }
+      else {
+        return(
+          // return sign in page
+        <BrowserRouter>
+        <div className="App">
+          <Navbar isLoggedIn={false}/>
+          {/* Makes sure only one path is loaded at a time*/}
+          <Switch>
+            <Route path='/signin' component={SignIn}></Route>
+            <Route path='/room/:id' component={RoomPage}></Route>            
+            <Route path='/signup' component={SignUp}></Route>
+            <Route exact path='/dashboard' component={Dashboard}/>
+            <Route path='/createroom' component={CreateRoom}></Route>
+            <Route path='/searchrooms' component={SearchRoom}></Route>
+          </Switch>    
+         
+
+        </div>
+      </BrowserRouter>
+        );
+        
       }
     }
 

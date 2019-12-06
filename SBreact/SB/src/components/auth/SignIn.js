@@ -63,11 +63,11 @@ class SignIn extends Component {
 
             let result = await res.json();
 
-            if (result == 1){
+            if (result === 1){
                 UserStore.isLoggedIn = true;
                 UserStore.username = result.username;
             }
-            else if (result == 0){
+            else if (result === 0){
                 this.resetForm();
                 alert(result.msg);
             }
