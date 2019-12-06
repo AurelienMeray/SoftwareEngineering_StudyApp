@@ -36,7 +36,6 @@ class SignIn extends Component {
 
     async doLogin() {
 
-        alert("login clicked!");
 
         if(!this.state.username){
             return;
@@ -51,11 +50,12 @@ class SignIn extends Component {
 
         try {
 
-            let res = await fetch('localhost:8080/api/studybud/login', {
-                method: 'post',
+            let res = await fetch('http://localhost:8080/api/studybud/login', {
+                method: 'POST',
+                mode:'cors',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'               
                 },
                 body: JSON.stringify({
                     username: this.state.username,
@@ -71,7 +71,7 @@ class SignIn extends Component {
             }
             else if (result === 0){
                 this.resetForm();
-                alert(result.msg);
+                alert(result);
             }
         }
 

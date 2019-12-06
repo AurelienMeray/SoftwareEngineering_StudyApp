@@ -96,7 +96,7 @@ class App extends React.Component {
     if (UserStore.loading) {
       return(
         <div className="App">
-          <div classname='container'>
+          <div className='container'>
             Loading...
             
           </div>

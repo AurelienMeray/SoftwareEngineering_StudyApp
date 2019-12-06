@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RequestMapping("/api/studybud")
 @RestController
 public class LogicFacade {
@@ -47,7 +49,7 @@ public class LogicFacade {
      */
     @PostMapping(path = "/login")
     public int verifyLoginRequest(@Valid @NonNull @RequestBody User user) {
-
+        System.out.println("got login attempt");
         return controller.verifyLoginRequest(user);
     }
 
