@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * DataFacade is a service that performs database retrieval and update
+ * requests from StudyBud's database.
+ */
 @Service
 public class DataFacade {
     DataController db;
@@ -42,7 +46,9 @@ public class DataFacade {
     }
 
     /**
-     *
+     * Returns the rooms of a user specified subject
+     * @param subject
+     * @return
      */
     public List<Room> requestRooms(String subject) {
         List<Room> rooms = db.queryRooms(subject);
@@ -50,7 +56,11 @@ public class DataFacade {
     }
 
     /**
-     *
+     * Adds a room to StudyBud's database and sets the administrator of the
+     * newly added room.
+     * @param admin the administrator of the created room
+     * @param room the room to create
+     * @return 1 if succeeded, 0 if failed (
      */
     public int createRoom(User admin, Room room) {
         int result = db.saveRoom(admin, room);
@@ -58,7 +68,12 @@ public class DataFacade {
     }
 
     /**
-     *
+     * Deletes a room from Studybud's database. Note that only the room's
+     * administrator can delete a room. If the user is not an administrator
+     * of the room, then the room will not be deleted.
+     * @param user the administrator of the room
+     * @param room
+     * @return 1 if succeeded, 0 if failed (room does not exist or user is not an admin)
      */
     public int deleteRoom(User user, Room room) {
         int result = db.deleteRoom(user, room);
@@ -66,13 +81,22 @@ public class DataFacade {
     }
 
     /**
-     *
+     * Joins a user to a room.
+     * @param user the user that join the room
+     * @param room the room to be joined
+     * @return 1 if succeeded, 0 if failed (room does not exist or user already joined)
      */
     public int connectUserRoom(User user, Room room) {
         int result = db.updateUserRooms(user, room);
         return result;
     }
 
+    /**
+     * Returns the user's information as a user object. This includes
+     * the user's password.
+     * @param username the user's username
+     * @return the user's information from StudyBud's database
+     */
     public User returnUserInfo(String username) {
         User user = new User();
         user.setFirstName(username);
@@ -80,12 +104,20 @@ public class DataFacade {
         return fullUser;
     }
 
+    /**
+     * Returns the rooms that the user has joined.
+     * @param username the user's username
+     * @return the rooms joined by the user
+     */
     public List<Room> returnRooms(String username) {
         User user = new User();
         user.setUserName(username);
         return db.getAllRoomsJoinedByUser(user);
     }
 
+    /*
+     * Clears everything from StudyBud's database. For testing purposes only.
+     */
     public void clearAllData() {
         db.clearAllData();
     }
