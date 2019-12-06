@@ -26,7 +26,7 @@ class SignIn extends Component {
         console.log(this.state);
     }
 
-    resetForm() {
+    async resetForm() {
         this.setState ({
             username: '',
             password: '',
@@ -35,6 +35,7 @@ class SignIn extends Component {
     }
 
     async doLogin() {
+
 
         if(!this.state.username){
             return;
@@ -49,11 +50,12 @@ class SignIn extends Component {
 
         try {
 
-            let res = await fetch('localhost:8080/api/studybud/login', {
-                method: 'post',
+            let res = await fetch('http://localhost:8080/api/studybud/login', {
+                method: 'POST',
+                mode:'cors',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'               
                 },
                 body: JSON.stringify({
                     username: this.state.username,
@@ -63,13 +65,14 @@ class SignIn extends Component {
 
             let result = await res.json();
 
-            if (result == 1){
+            if (result === 1){
                 UserStore.isLoggedIn = true;
                 UserStore.username = result.username;
+                //history.push("/dashboard")
             }
-            else if (result == 0){
+            else if (result === 0){
                 this.resetForm();
-                alert(result.msg);
+                alert(result);
             }
         }
 
@@ -82,14 +85,17 @@ class SignIn extends Component {
     async componentDidMount() {
 
         try {
-          let res = await fetch('/isLoggedIn', {
-            method: 'post',
+          let res = await fetch('localhost:8080/api/studybud/isLoggedIn', {
+            method: 'get',
             headers: {
               'Accept': 'application/json',
-              'Content-type': 'application/json'
-            }
+              'Content-Type': 'application/json'
+             },
+              body: JSON.stringify({
+                  username: UserStore.username,
+              })
           });
-    
+
           let result = await res.json();
     
           if (result && result.success) {

@@ -1,5 +1,6 @@
 package com.example.demo.sblogic;
 
+
 import com.example.demo.sbdata.DataFacade;
 import com.example.demo.model.Room;
 import com.example.demo.model.User;
@@ -13,6 +14,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component //singleton stereotype for spring boot
 public class LogicController {
@@ -22,24 +25,38 @@ public class LogicController {
 
     //data package facade
     private DataFacade db;
+    private Authenticator auth;
 
     /**
-     * constructor
+     *
+     * @param db
+     * @param auth
      */
     @Autowired
-    public LogicController(DataFacade db) {
+    public LogicController(DataFacade db, Authenticator auth) {
         this.db = db;
-
+        this.auth = auth;
     }
 
     /**
      *
+     * @param user
+     * @return
      */
-    public int requestPage(String toOpen) {
-        return 1;
-        //TODO: figure out whether the user is authorized at this point
-        // sequence diagram
+    public int authenticateRequest(User user) {
+        return (auth.userIsAuthorized(user));
     }
+
+    /**
+     *
+     * @param toOpen
+     * @return
+     */
+//    public int requestPage(String toOpen) {
+//        return 1;
+//        //TODO: figure out whether the user is authorized at this point
+//        // sequence diagram
+//    }
 
     /**
      *
@@ -69,12 +86,13 @@ public class LogicController {
             user.setPassword(hashPass(user.getPassword()));
             if (user.getUserName().equals(dbUser.getUserName())) {
                 if (user.getPassword().equals(dbUser.getPassword())) {
+                    auth.authorize(user);
                     return 1;
                 }
             }
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            System.out.println("What");
-            e.printStackTrace();
+            Logger.getLogger(LogicController.class.getName()).log(Level.SEVERE, null, e);
+            //e.printStackTrace();
         }
         return 0;
     }
@@ -93,8 +111,8 @@ public class LogicController {
     /**
      *
      */
-    public void endSession() {
-
+    public int endSession(User user) {
+        return auth.removeAuthorization(user);
     }
 
     /**
@@ -108,7 +126,8 @@ public class LogicController {
                 return db.requestReg(user);
             }
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            e.printStackTrace();
+            Logger.getLogger(LogicController.class.getName()).log(Level.SEVERE, null, e);
+            //e.printStackTrace();
         }
 
         return 0;

@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RequestMapping("/api/studybud")
 @RestController
 public class LogicFacade {
@@ -36,14 +38,21 @@ public class LogicFacade {
         return controller.returnUserInfo(username);
     }
 
+    @GetMapping(path = "/isLoggedIn")
+    public int authenticateRequest(@Valid @NonNull @RequestBody User user) {
+        return controller.authenticateRequest(user);
+    }
+
 
     /**
      *
      */
     @PostMapping(path = "/login")
     public int verifyLoginRequest(@Valid @NonNull @RequestBody User user) {
-        // TODO implement here
+        System.out.println(user.getUserName());
+        System.out.println(user.getPassword());
         return controller.verifyLoginRequest(user);
+
     }
 
     /**
@@ -57,17 +66,18 @@ public class LogicFacade {
     /**
      *
      */
-    public void endSessionRequest() {
+    @PostMapping(path = "/logout")
+    public int endSessionRequest(@Valid @NonNull @RequestBody User user) {
         // TODO implement here
         controller.endSessionRequest();
         //if request valid
-        controller.endSession();
+        return (controller.endSession(user));
     }
 
     /**
      *
      */
-    @GetMapping(path = "register")
+    @GetMapping(path = "/register")
     public int requestRegPage() {
         // TODO implement here
         //react handles page?
@@ -77,7 +87,7 @@ public class LogicFacade {
     /**
      *
      */
-    @PostMapping (path = "register")
+    @PostMapping (path = "/register")
     public int requestReg(@Valid @NonNull @RequestBody User user) {
         return controller.requestReg(user);
     }
@@ -85,7 +95,7 @@ public class LogicFacade {
     /**
      *
      */
-    @GetMapping(path = "SearchRoom")
+    @GetMapping(path = "/searchroom")
     public int requestSearchPage() {
         return controller.requestPage("searchrooms");
         // react implements pages?
@@ -95,7 +105,7 @@ public class LogicFacade {
     /**
      *
      */
-    @GetMapping (path = "SearchRoom/{subject}")
+    @GetMapping (path = "searchroom/{subject}")
     public List<Room> requestSearch(@PathVariable ("subject") String subject) {
         // TODO implement here
         return controller.requestSearch(subject);
@@ -113,7 +123,7 @@ public class LogicFacade {
     /**
      *
      */
-    @GetMapping(path = "{username}/Dashboard")
+    @GetMapping(path = "{username}/dashboard")
     public List<Room> returnRooms(@PathVariable ("username") String username) {
 
         return controller.returnRooms(username);
@@ -122,7 +132,7 @@ public class LogicFacade {
     /**
      *
      */
-    @PostMapping (path = "{username}/CreateRoom")
+    @PostMapping (path = "{username}/createroom")
     public int requestRoomCreate(@PathVariable ("username") String username,
                                   @Valid @NonNull @RequestBody Room room) {
 
@@ -134,7 +144,7 @@ public class LogicFacade {
     /**
      *
      */
-    @DeleteMapping (path = "{username}/{roomID}/DeleteRoom")
+    @DeleteMapping (path = "{username}/{roomID}/deleteroom")
     public int deleteRoomReq(@PathVariable ("username") String username,
                              @PathVariable ("roomID") UUID roomID) {
         // TODO implement here
@@ -148,7 +158,7 @@ public class LogicFacade {
     /**
      *
      */
-    @PostMapping (path = "{username}/{roomID}/JoinRoom")
+    @PostMapping (path = "{username}/{roomID}/joinroom")
     public int joinRoomReq(@PathVariable ("username") String username,
                             @PathVariable ("roomID") UUID roomID) {
         // TODO implement here
