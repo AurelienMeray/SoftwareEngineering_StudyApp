@@ -49,14 +49,16 @@ public class LogicFacade {
      */
     @PostMapping(path = "/login")
     public int verifyLoginRequest(@Valid @NonNull @RequestBody User user) {
-        System.out.println("got login attempt");
+        System.out.println(user.getUserName());
+        System.out.println(user.getPassword());
         return controller.verifyLoginRequest(user);
+
     }
 
     /**
      *
      */
-    @GetMapping(path = "{username}/login")
+    @GetMapping(path = "{username}/loggedin")
     public User verifiedUser(@PathVariable ("username") String username){
         return controller.returnUserInfo(username);
     }
