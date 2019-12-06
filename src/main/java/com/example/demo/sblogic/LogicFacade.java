@@ -10,16 +10,20 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
-
+/**
+ * LogicFacade is a service that dispatches requests from the interface layer without revealing detailed information
+ * about the other classes that compose the logic layer.
+ */
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RequestMapping("/api/studybud")
 @RestController
 public class LogicFacade {
 
-    private LogicController controller;
+    private LogicController controller; //The logic controller
 
     /**
-     * constructor
+     * Constructs a LogicFacade.
+     * @param controller the logic controller that is injected
      */
     @Autowired
     public LogicFacade(LogicController controller) {
@@ -28,24 +32,20 @@ public class LogicFacade {
     }
 
     /**
-     *
+     * Determines if the user is allowed to use StudyBud's services. A user is allowed to use StudyBud's
+     * services if they have a currently active session.
+     * @param user the user to check
+     * @return 1 if authorized, 0 if not authorized
      */
-    public int requestLoginPage() {
-        return controller.requestPage("loginuser");
-    }
-
-    public User getUserInfo(String username) {
-        return controller.returnUserInfo(username);
-    }
-
     @GetMapping(path = "/isLoggedIn")
     public int authenticateRequest(@Valid @NonNull @RequestBody User user) {
         return controller.authenticateRequest(user);
     }
 
-
     /**
-     *
+     * Verifies the user's credentials
+     * @param user the user's information, which contains username and password
+     * @return 1 if verified, 0 if rejected
      */
     @PostMapping(path = "/login")
     public int verifyLoginRequest(@Valid @NonNull @RequestBody User user) {
@@ -56,7 +56,9 @@ public class LogicFacade {
     }
 
     /**
-     *
+     * Returns the user's information.
+     * @param username the user to obtain
+     * @return the user's information.
      */
     @GetMapping(path = "{username}/login")
     public User verifiedUser(@PathVariable ("username") String username){

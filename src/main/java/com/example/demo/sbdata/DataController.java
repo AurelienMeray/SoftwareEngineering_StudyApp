@@ -30,24 +30,6 @@ public class DataController {
     }
 
     /**
-     * Returns the first result of a select query.
-     * @param sql the sql query
-     * @param rowMapper a row mapper that extracts objects of a specified type from a result set
-     * @param <T> the type of object to extract from the result set
-     * @return the first result in the requested type if at least one result returned, null if none returned
-     */
-    public <T> T getFirstResult(String sql, RowMapper rowMapper) {
-        List<T> resultSet = jdbcTemplate.query(sql,
-                rowMapper);
-
-        if (resultSet.isEmpty()) {
-            return null;
-        }
-
-        return resultSet.get(0);
-    }
-
-    /**
      * Returns the first result of a select query using custom arguments.
      * @param sql the sql query
      * @param params the arguments of the query
@@ -65,19 +47,6 @@ public class DataController {
         }
 
         return resultSet.get(0);
-    }
-
-    /**
-     * Returns the result set of a select query.
-     * @param sql the sql query
-     * @param rowMapper a row mapper that extracts objects of a specified type from a result set
-     * @param <T> the type of object to extract from the result set
-     * @return a list of objects of a requested type
-     */
-    public <T> List<T> getResultSet(String sql, RowMapper rowMapper) {
-        List<T> resultSet = jdbcTemplate.query(sql,
-                rowMapper);
-        return resultSet;
     }
 
     /**
@@ -112,18 +81,6 @@ public class DataController {
         jdbcTemplate.update(sql);
     }
 
-    /* public int checkForUser(User user) {
-        if (user == null) throw new IllegalArgumentException("user can't be null");
-        int result = 0;
-        String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u WHERE u.username = ? AND u.password = ?";
-        if (getFirstResult(sql,
-                new Object[]{user.getUserName(), user.getPassword()}, new UserRowMapper()) != null) {
-            result = 1;
-        }
-
-        return result;
-    } */
-
     /**
      * Adds a user to the user table.
      * PRECONDITION: user is not null.
@@ -148,7 +105,6 @@ public class DataController {
             result = 1;
         } catch (DataAccessException e) {
             Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
-            //e.printStackTrace();
         }
         return result;
     }
@@ -180,7 +136,6 @@ public class DataController {
             result = 1;
         } catch (DataAccessException e) {
             Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
-            //e.printStackTrace();
         }
         return result;
     }
@@ -211,7 +166,6 @@ public class DataController {
             result = 1;
         } catch (DataAccessException e) {
             Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
-            //e.printStackTrace();
         }
         return result;
     }
@@ -237,14 +191,6 @@ public class DataController {
         }
         return loginInfo;
     }
-
-   /* public List<User> getAllUsers() {
-        return getResultSet("SELECT * FROM \"sbdatabase\".\"USER\"", new UserRowMapper());
-    }
-
-    public List<Room> getAllRooms() {
-        return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\"", new RoomRowMapper());
-    } */
 
     /**
      * Returns all the rooms that the user has joined.
@@ -291,7 +237,6 @@ public class DataController {
             result = 1;
         } catch (DataAccessException e) {
             Logger.getLogger(DataController.class.getName()).log(Level.INFO, null, e);
-            //e.printStackTrace();
         }
         return result;
     }

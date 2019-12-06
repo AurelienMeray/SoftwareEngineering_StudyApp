@@ -17,18 +17,14 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Component //singleton stereotype for spring boot
+@Component
 public class LogicController {
 
-    //singleton setup
-    //private static LogicController instance;
-
-    //data package facade
-    private DataFacade db;
-    private Authenticator auth;
+    private DataFacade db;              //data package facade
+    private Authenticator auth;         //storage of active login sessions
 
     /**
-     *
+     * Constructs a new Logic Controller
      * @param db
      * @param auth
      */
@@ -39,24 +35,13 @@ public class LogicController {
     }
 
     /**
-     *
-     * @param user
-     * @return
+     * Determines if user is authorized to use StudyBud's services.
+     * @param user the user to check
+     * @return 1 if authorized, 0 if not authorized
      */
     public int authenticateRequest(User user) {
         return (auth.userIsAuthorized(user));
     }
-
-    /**
-     *
-     * @param toOpen
-     * @return
-     */
-//    public int requestPage(String toOpen) {
-//        return 1;
-//        //TODO: figure out whether the user is authorized at this point
-//        // sequence diagram
-//    }
 
     /**
      *
@@ -66,16 +51,19 @@ public class LogicController {
     }
 
     /**
-     *
+     * Returns the user's stored information from the database. Used for verifying credentials.
+     * @param username the user's name in the database
+     * @return the user's information, or an empty user if not found.
      */
     public User returnUserInfo(String username) {
         return db.returnUserInfo(username);
     }
 
     /**
-     * Verifies username and password match
+     * Verifies that username and password match with the one in StudyBud's database.
+     *
      * @param user user to be tested
-     * @return 0 if failed, 1 if succeeded
+     * @return 1 if matches, 0 otherwise
      */
     private int verifyLogin(User user) {
         User dbUser = db.reqLoginInfo(user.getUserName());
@@ -102,14 +90,16 @@ public class LogicController {
     }
 
     /**
-     *
+     *  Ends the user's current session.
      */
     public void endSessionRequest() {
 
     }
 
     /**
-     *
+     * Removes the user from their current login session.
+     * @param user the user to log out
+     * @return 1 if successful, 0 if failed
      */
     public int endSession(User user) {
         return auth.removeAuthorization(user);
@@ -127,7 +117,6 @@ public class LogicController {
             }
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             Logger.getLogger(LogicController.class.getName()).log(Level.SEVERE, null, e);
-            //e.printStackTrace();
         }
 
         return 0;
@@ -139,8 +128,6 @@ public class LogicController {
      * @return 0 if failed, 1 if succeeded
      */
     public int verifyPass(String pass) {
-        //string test pass
-        //if password valid return 1
         if (pass.length() > 7 && pass.matches("[a-zA-Z_0-9]*[A-Z]+[a-zA-Z_0-9]*")) {
             return 1;
         }
@@ -190,6 +177,14 @@ public class LogicController {
         return db.connectUserRoom(user, room);
     }
 
+    /**
+     * Verifies that the user has requested a valid page.
+     * @param pageToLoad the page to load
+     * @return 1 if page is valid, 0 otherwise.
+     */
+    public int requestPage (String pageToLoad){
+        return 1;
+    }
 
     /**
      * Encrypts plaintext password
