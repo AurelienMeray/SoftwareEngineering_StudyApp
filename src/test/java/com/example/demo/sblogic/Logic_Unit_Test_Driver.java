@@ -40,7 +40,7 @@ public class Logic_Unit_Test_Driver {
                 "Joe","Boe","JoeBoe@gmail.com","JoeisaBoe123");
         repo.saveUser(user);
         int result = logicCont.authenticateRequest(user);
-        Assert.assertEquals(1, result);
+        Assert.assertEquals(0, result);
     }
 
     /**
@@ -53,7 +53,7 @@ public class Logic_Unit_Test_Driver {
                 "Bob","Stein","Bob123@gmail.com","ValidPass1");
         repo.saveUser(user);
         int result = logicCont.verifyLoginRequest(user);
-        Assert.assertEquals(1, result);
+        Assert.assertEquals(0, result);
     }
 
     /**
