@@ -17,6 +17,9 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 
+/**
+ * Contains the methods for testing the StudyBud Logic Controller.
+ */
 public class Logic_Unit_Test_Driver {
 
     @Autowired
@@ -28,6 +31,9 @@ public class Logic_Unit_Test_Driver {
     @Autowired
     private DataFacade service;
 
+    /**
+     * Tests to see if user can be authenticated in the database.
+     */
     @Test
     public void authenticateRequestTest(){
         User user = new User("Joejoe",
@@ -37,6 +43,9 @@ public class Logic_Unit_Test_Driver {
         Assert.assertEquals(1, result);
     }
 
+    /**
+     * Tests to see if a user's entered information matches the user's credentials stored in the database.
+     */
     @Test
     public void verifyLoginRequestTest() {
         //repo.clearAllData();
@@ -47,7 +56,9 @@ public class Logic_Unit_Test_Driver {
         Assert.assertEquals(1, result);
     }
 
-
+    /**
+     * Tests to see is matches the user's credentials stored in the database.
+     */
     @Test
     public void returnUserInfoTest() {
         //repo.clearAllData();
@@ -59,7 +70,9 @@ public class Logic_Unit_Test_Driver {
 
     }
 
-
+    /**
+     * Tests to see if user object can be saved in the database from the Logic controller
+     */
     @Test
     public void requestRegTest() {
         User user = new User("Aurelien",
@@ -69,6 +82,9 @@ public class Logic_Unit_Test_Driver {
         Assert.assertEquals(1,result);
     }
 
+    /**
+     * Tests to see if a password is valid. Input is a valid password.
+     */
     @Test
     public void verifyPassTest1() {
         String testPass = "AurelienIsTheBest123";
@@ -76,6 +92,9 @@ public class Logic_Unit_Test_Driver {
         Assert.assertEquals(1, result);
     }
 
+    /**
+     * Tests to see if a password is invalid. Input is an invalid password.
+     */
     @Test
     public void verifyPassTest2() {
         String testPass = "notvalid";
@@ -83,6 +102,9 @@ public class Logic_Unit_Test_Driver {
         Assert.assertEquals(0, result);
     }
 
+    /**
+     * Tests to see if a user can successfully create a room. Room table should be incremented by one.
+     */
     @Test
     public void reqRoomCreate() {
         repo.clearAllData();
@@ -97,6 +119,9 @@ public class Logic_Unit_Test_Driver {
 
     }
 
+    /**
+     * Tests to see if a user can delete a room. Checks if the user is the room's admin and deletes the room if true.
+     */
     @Test
     public void deleteRoomReq() {
         User user = new User("MickeyMouse",
@@ -106,6 +131,9 @@ public class Logic_Unit_Test_Driver {
         Assert.assertEquals(1, result);
     }
 
+    /**
+     * Tests to see if a user can join a room. USERROOM table should be updated with the room and user information.
+     */
     @Test
     public void joinRoomReq() {
         User user1 = new User("MickeyMouse",

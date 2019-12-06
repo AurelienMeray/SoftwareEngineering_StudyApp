@@ -13,12 +13,18 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 
+/**
+ * Contains the methods for testing the StudyBud Data Controller.
+ */
 class DB_Unit_Test_Driver {
 
     @Autowired
     private DataController repo;
 
-
+    /**
+     * Tests to see if a user is successfully added to the database. Database should increment user count
+     * by one.
+     */
     @Test
     void saveUserTest() {
         repo.clearAllData();
@@ -29,6 +35,10 @@ class DB_Unit_Test_Driver {
         Assert.assertEquals(1, result);
     }
 
+    /**
+     * Tests to see if a room is successfully added to the database. Database should increment room count
+     * by one.
+     */
     @Test
     void saveRoomTest() {
         //repo.clearAllData();
@@ -39,6 +49,9 @@ class DB_Unit_Test_Driver {
         Assert.assertEquals(1, result);
     }
 
+    /**
+     * Tests to see if a local user profile matches that of the user profile stored in the database.
+     */
     @Test
     void getUserInfoTest() {
         User user = new User("Bob123",
@@ -47,6 +60,9 @@ class DB_Unit_Test_Driver {
         Assert.assertEquals(user, resultUser);
     }
 
+    /**
+     * Tests to see if a list of rooms that a user is part of is correct.
+     */
     @Test
     void getAllRoomsJoinedByUserTest() {
         User user = new User("Bob123",
@@ -56,6 +72,10 @@ class DB_Unit_Test_Driver {
 
     }
 
+    /**
+     * Tests to see if a room is successfully removed from the database. Database should be left with
+     * one less room.
+     */
     @Test
     void deleteRoomTest() {
         //Creates a user
@@ -72,6 +92,9 @@ class DB_Unit_Test_Driver {
         Assert.assertEquals(1,result);
     }
 
+    /**
+     * Tests to see is a list of rooms matching a String keyword Subject is listed.
+     */
     @Test
     void queryRoomsTest() {
         User user = new User("johnny",
@@ -83,6 +106,9 @@ class DB_Unit_Test_Driver {
         Assert.assertEquals(roomInfo, roomInfo);
     }
 
+    /**
+     * Tests to see if a room matches the corresponding admin of the room.
+     */
     @Test
     void getRoomAdminInfoTest() {
         User user = new User("johnny",
