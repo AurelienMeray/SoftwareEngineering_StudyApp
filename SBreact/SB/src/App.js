@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react'
 import UserStore from  './stores/UserStore'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import Dashboard from './components/dashboard/Dashboard'
 import RoomPage from './components/room/RoomPage'
@@ -9,7 +9,7 @@ import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import CreateRoom from './components/room/CreateRoom'
 import SearchRoom from './components/room/SearchRoom'
-import SignedOutLinks from './components/layout/SignedOutLinks'
+
 
 class App extends React.Component {
 
@@ -43,6 +43,7 @@ class App extends React.Component {
         UserStore.loading = false;
         UserStore.isLoggedIn = true;
         UserStore.username = result.username;
+        return <Redirect to='/dashboard'/>
       }
       else {
         UserStore.loading = false;
@@ -62,25 +63,30 @@ class App extends React.Component {
   async doLogout() {
 
     try {
-      let res = await fetch('/logout', {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json'
-        }
-      });
+      // let res = await fetch('/logout', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-type': 'application/json'
+      //   }
+      // });
 
-      let result = await res.json();
+      // let result = await res.json();
 
-      if (result && result.success) {
+      // if (result && result.success) {
         
-        UserStore.isLoggedIn = false;
-        UserStore.username = '';
-      }
-      else {
-        UserStore.loading = false;
-        UserStore.isLoggedIn = false;
-      }
+      //   UserStore.isLoggedIn = false;
+      //   UserStore.username = '';
+      // }
+      // else {
+      //   UserStore.loading = false;
+      //   UserStore.isLoggedIn = false;
+      // }
+
+      UserStore.isLoggedIn = false;
+      UserStore.username = '';
+
+      return <Redirect to='/login'/>
 
     }
 
@@ -112,6 +118,7 @@ class App extends React.Component {
               {/* Makes sure only one path is loaded at a time*/}
               <Switch>
                 <Route exact path='/' component={Dashboard}></Route>
+                <Route path='/dashboard' component={Dashboard}></Route>
                 <Route path='/room/:id' component={RoomPage}></Route>                
                 <Route path='/createroom' component={CreateRoom}></Route>
                 <Route path='/searchrooms' component={SearchRoom}></Route>
@@ -127,8 +134,9 @@ class App extends React.Component {
         <div className="App">
           <Navbar isLoggedIn={false}/>
           {/* Makes sure only one path is loaded at a time*/}
-          <Switch>            
-            <Route path='/' component={SignIn}></Route>                        
+          <Switch>     
+            <Route exact path='/' component={SignIn}></Route>       
+            <Route path='/signin' component={SignIn}></Route>                        
             <Route path='/signup' component={SignUp}></Route>
           </Switch>
         </div>

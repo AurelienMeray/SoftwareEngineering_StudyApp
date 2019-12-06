@@ -58,7 +58,7 @@ public class LogicFacade {
     /**
      *
      */
-    @GetMapping(path = "{username}/loggedin")
+    @GetMapping(path = "{username}/login")
     public User verifiedUser(@PathVariable ("username") String username){
         return controller.returnUserInfo(username);
     }
