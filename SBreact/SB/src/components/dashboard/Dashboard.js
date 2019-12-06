@@ -4,26 +4,31 @@ import RoomList from '../room/RoomList'
 
 class Dashboard extends Component {
 
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         items: [],
-    //         isLoaded: false,
-    //     }
-    // }
+    constructor(props){
+        super(props);
+        this.state = {
+            items: [],
+            isLoaded: false,
+        }
+    }
 
-    // componentDidMount(){
+    componentDidMount(){        
 
-    //     fetch('localhost:8080/api/studybud/{username}/')
-    //         .then(res => res.json())
-    //         .then(json => {
-    //             this.setState({
-    //                 isLoaded:true,
-    //                 items: json,
-    //             })
-    //         })
+        try {
+            fetch('localhost:8080/api/studybud/{UserStore.username}/dashboard')
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    isLoaded:true,
+                    items: json,
+                })
+            })
+        }
+        catch(e){
 
-    // }
+        }
+
+    }
 
     render() {
 
@@ -39,13 +44,13 @@ class Dashboard extends Component {
                     <div className="row">
                         <div className="col s12 m6">
                             <RoomList/>
-                            {/* <ul>
+                            <ul>
                                 {items.map(item => (
                                     <li key={item.id}>
                                         Room: {item.name} | Subject: {item.subject}
                                     </li>
                                 ))};
-                            </ul> */}
+                            </ul>
                         </div>
                         <div className="col s12 m5 offset-m1">
                             <Notifications/>
