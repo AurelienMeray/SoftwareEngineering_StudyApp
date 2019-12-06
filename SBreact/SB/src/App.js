@@ -128,7 +128,7 @@ class App extends React.Component {
           <Navbar isLoggedIn={false}/>
           {/* Makes sure only one path is loaded at a time*/}
           <Switch>            
-            <Route path='/' component={SignIn}></Route>                        
+            <Route path='/signin' component={SignIn}></Route>                        
             <Route path='/signup' component={SignUp}></Route>
           </Switch>
         </div>
