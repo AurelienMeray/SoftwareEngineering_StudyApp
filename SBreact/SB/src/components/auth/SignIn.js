@@ -129,7 +129,7 @@ class SignIn extends Component {
                     <div className="input-field">
                         <button 
                         disabled={this.state.buttonDisabled}
-                        onClick={() => this.doLogin()}
+                        onClick={() => this.doLogin}
                         className="btn blue lighten-1 z-depth-0">Login</button>
 
                     </div>

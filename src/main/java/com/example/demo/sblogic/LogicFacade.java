@@ -42,7 +42,7 @@ public class LogicFacade {
      */
     @PostMapping(path = "/login")
     public int verifyLoginRequest(@Valid @NonNull @RequestBody User user) {
-        // TODO implement here
+
         return controller.verifyLoginRequest(user);
     }
 

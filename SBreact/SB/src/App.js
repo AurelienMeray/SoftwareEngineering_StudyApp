@@ -24,8 +24,12 @@ class App extends React.Component {
    async componentDidMount() {
 
     try {
-      let res = await fetch('/isLoggedIn', {
-        method: 'post',
+      
+
+      if (UserStore.isLoggedIn) {
+
+      let res = await fetch('localhost:8080/api/studybud/{Userstore.username}/login', {
+        method: 'get',
         headers: {
           'Accept': 'application/json',
           'Content-type': 'application/json'
@@ -34,7 +38,6 @@ class App extends React.Component {
 
       let result = await res.json();
 
-      if (result && result.success) {
         UserStore.loading = false;
         UserStore.isLoggedIn = true;
         UserStore.username = result.username;
@@ -113,8 +116,6 @@ class App extends React.Component {
                 <Route path='/createroom' component={CreateRoom}></Route>
                 <Route path='/searchrooms' component={SearchRoom}></Route>
               </Switch>    
-             
-    
             </div>
           </BrowserRouter>
         );
@@ -126,16 +127,10 @@ class App extends React.Component {
         <div className="App">
           <Navbar isLoggedIn={false}/>
           {/* Makes sure only one path is loaded at a time*/}
-          <Switch>
-            <Route path='/signin' component={SignIn}></Route>
-            <Route path='/room/:id' component={RoomPage}></Route>            
+          <Switch>            
+            <Route path='/' component={SignIn}></Route>                        
             <Route path='/signup' component={SignUp}></Route>
-            <Route exact path='/dashboard' component={Dashboard}/>
-            <Route path='/createroom' component={CreateRoom}></Route>
-            <Route path='/searchrooms' component={SearchRoom}></Route>
-          </Switch>    
-         
-
+          </Switch>
         </div>
       </BrowserRouter>
         );
