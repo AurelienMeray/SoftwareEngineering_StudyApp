@@ -15,7 +15,7 @@ class Dashboard extends Component {
     componentDidMount(){        
 
         try {
-            fetch('localhost:8080/api/studybud/{UserStore.username}/dashboard')
+            fetch('http://localhost:8080/api/studybud/{UserStore.username}/dashboard')
             .then(res => res.json())
             .then(json => {
                 this.setState({

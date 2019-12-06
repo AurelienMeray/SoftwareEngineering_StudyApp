@@ -68,6 +68,7 @@ class SignIn extends Component {
             if (result === 1){
                 UserStore.isLoggedIn = true;
                 UserStore.username = result.username;
+                //history.push("/dashboard")
             }
             else if (result === 0){
                 this.resetForm();
