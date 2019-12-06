@@ -119,7 +119,7 @@ public class DataFacade {
      * Clears everything from StudyBud's database. For testing purposes only.
      */
     public void clearAllData() {
-        db.clearAllData();
+        //db.clearAllData();
     }
 
 }

@@ -112,7 +112,7 @@ public class DataController {
         jdbcTemplate.update(sql);
     }
 
-    public int checkForUser(User user) {
+    /* public int checkForUser(User user) {
         if (user == null) throw new IllegalArgumentException("user can't be null");
         int result = 0;
         String sql = "SELECT * FROM \"sbdatabase\".\"USER\" u WHERE u.username = ? AND u.password = ?";
@@ -122,7 +122,7 @@ public class DataController {
         }
 
         return result;
-    }
+    } */
 
     /**
      * Adds a user to the user table.
@@ -238,13 +238,13 @@ public class DataController {
         return loginInfo;
     }
 
-    public List<User> getAllUsers() {
+   /* public List<User> getAllUsers() {
         return getResultSet("SELECT * FROM \"sbdatabase\".\"USER\"", new UserRowMapper());
     }
 
     public List<Room> getAllRooms() {
         return getResultSet("SELECT * FROM \"sbdatabase\".\"ROOM\"", new RoomRowMapper());
-    }
+    } */
 
     /**
      * Returns all the rooms that the user has joined.
