@@ -26,7 +26,7 @@ class SignIn extends Component {
         console.log(this.state);
     }
 
-    resetForm() {
+    async resetForm() {
         this.setState ({
             username: '',
             password: '',
@@ -35,6 +35,8 @@ class SignIn extends Component {
     }
 
     async doLogin() {
+
+        alert("login clicked!");
 
         if(!this.state.username){
             return;
@@ -129,7 +131,7 @@ class SignIn extends Component {
                     <div className="input-field">
                         <button 
                         disabled={this.state.buttonDisabled}
-                        onClick={() => this.doLogin}
+                        onClick={() => this.doLogin()}
                         className="btn blue lighten-1 z-depth-0">Login</button>
 
                     </div>

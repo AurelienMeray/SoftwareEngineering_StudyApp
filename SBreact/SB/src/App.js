@@ -18,7 +18,7 @@ class App extends React.Component {
     this.state = {
         isLoggedIn: false
     }
-}
+  }
 
   
    async componentDidMount() {
@@ -28,7 +28,9 @@ class App extends React.Component {
 
       if (UserStore.isLoggedIn) {
 
-      let res = await fetch('localhost:8080/api/studybud/{Userstore.username}/login', {
+        // 'localhost:8080/api/studybud/{Userstore.username}/login'
+
+      let res = await fetch('/login', {
         method: 'get',
         headers: {
           'Accept': 'application/json',
@@ -108,10 +110,8 @@ class App extends React.Component {
             <div className="App">
               <Navbar isLoggedIn={true}/>
               {/* Makes sure only one path is loaded at a time*/}
-              <Switch>
-                <Route path='/signin' component={SignIn}></Route>
-                <Route path='/room/:id' component={RoomPage}></Route>            
-                <Route path='/signup' component={SignUp}></Route>
+              <Switch>                
+                <Route path='/room/:id' component={RoomPage}></Route>                
                 <Route exact path='/dashboard' component={Dashboard}/>
                 <Route path='/createroom' component={CreateRoom}></Route>
                 <Route path='/searchrooms' component={SearchRoom}></Route>
@@ -120,7 +120,7 @@ class App extends React.Component {
           </BrowserRouter>
         );
       }
-      else {
+      else if(!UserStore.isLoggedIn){
         return(
           // return sign in page
         <BrowserRouter>
@@ -139,7 +139,7 @@ class App extends React.Component {
     }
 
     
-  }
+  }//end of render()
 
   
 }
