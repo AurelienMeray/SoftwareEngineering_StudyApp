@@ -105,7 +105,12 @@ class DB_Unit_Test_Driver {
     }
 
     @Test
-    void deleteRoom() {
+    void test_deleteRoom() {
+        User user = new User("Bob123",
+                "Bob","Stein","Bob123@gmail.com","ValidPass1");
+        Room room = new Room("Chem","Chemistry","FIU","Chem Club!");
+        int result = repo.deleteRoom(user,room);
+        Assert.assertEquals(1,result);
     }
 
     @Test
