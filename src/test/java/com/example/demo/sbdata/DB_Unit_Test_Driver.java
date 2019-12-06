@@ -64,9 +64,9 @@ class DB_Unit_Test_Driver {
 
         //Creates a room
         Room room = new Room("DronesBRO","Drones","FIU","This is a drone");
+        repo.saveRoom(user,room);
 
         //Deletes the room
-        repo.saveRoom(user,room);
         int result = repo.deleteRoom(user,room);
         Assert.assertEquals(1,result);
     }
