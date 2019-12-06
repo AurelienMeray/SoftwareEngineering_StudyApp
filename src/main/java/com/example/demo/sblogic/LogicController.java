@@ -52,11 +52,11 @@ public class LogicController {
      * @param toOpen
      * @return
      */
-//    public int requestPage(String toOpen) {
-//        return 1;
-//        //TODO: figure out whether the user is authorized at this point
-//        // sequence diagram
-//    }
+    public int requestPage(String toOpen) {
+        return 1;
+        //TODO: figure out whether the user is authorized at this point
+        // sequence diagram
+    }
 
     /**
      *
