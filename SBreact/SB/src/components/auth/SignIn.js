@@ -82,14 +82,17 @@ class SignIn extends Component {
     async componentDidMount() {
 
         try {
-          let res = await fetch('/isLoggedIn', {
-            method: 'post',
+          let res = await fetch('localhost:8080/api/studybud/isLoggedIn', {
+            method: 'get',
             headers: {
               'Accept': 'application/json',
-              'Content-type': 'application/json'
-            }
+              'Content-Type': 'application/json'
+             },
+              body: JSON.stringify({
+                  username: UserStore.username,
+              })
           });
-    
+
           let result = await res.json();
     
           if (result && result.success) {
