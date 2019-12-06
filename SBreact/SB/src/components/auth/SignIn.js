@@ -46,9 +46,7 @@ class SignIn extends Component {
 
         try {
 
-            let res = 1;
-
-            /*await fetch('http://localhost:8080/api/studybud/login', {
+            let res = fetch('http://localhost:8080/api/studybud/login', {
                 method: 'POST',
                 mode:'cors',
                 headers: {
@@ -60,9 +58,8 @@ class SignIn extends Component {
                     password: this.state.password
                 })
             });
-            */
 
-            let result = 1; //await res.json();
+            let result = await res.json();
 
             if (result === 1){
                 UserStore.isLoggedIn = true;
