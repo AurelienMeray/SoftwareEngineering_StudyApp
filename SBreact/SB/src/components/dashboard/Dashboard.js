@@ -4,13 +4,10 @@ import RoomList from '../room/RoomList'
 
 class Dashboard extends Component {
 
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         items: [],
-    //         isLoaded: false,
-    //     }
-    // }
+    state = {
+        isFetching: false
+    }
+
 
     // componentDidMount(){
 
@@ -27,25 +24,15 @@ class Dashboard extends Component {
 
     render() {
 
-        var{ isLoaded, items }= this.state;
-
-        if(!isLoaded){
+        if(this.isFetching){
             return <div>Loading Dashboard...</div>;
         }
         else{
-
             return (
                 <div className="dashboard container">
                     <div className="row">
                         <div className="col s12 m6">
-                            <RoomList/>
-                            {/* <ul>
-                                {items.map(item => (
-                                    <li key={item.id}>
-                                        Room: {item.name} | Subject: {item.subject}
-                                    </li>
-                                ))};
-                            </ul> */}
+                            <RoomList />
                         </div>
                         <div className="col s12 m5 offset-m1">
                             <Notifications/>

@@ -6,8 +6,6 @@ class SignIn extends Component {
     constructor(props){
         super(props);
         this.state = {
-            username: '',
-            password: '',
             buttonDisabled: false
         }
     }
@@ -35,8 +33,6 @@ class SignIn extends Component {
     }
 
     async doLogin() {
-
-
         if(!this.state.username){
             return;
         }
@@ -50,7 +46,9 @@ class SignIn extends Component {
 
         try {
 
-            let res = await fetch('http://localhost:8080/api/studybud/login', {
+            let res = 1;
+
+            /*await fetch('http://localhost:8080/api/studybud/login', {
                 method: 'POST',
                 mode:'cors',
                 headers: {
@@ -62,8 +60,9 @@ class SignIn extends Component {
                     password: this.state.password
                 })
             });
+            */
 
-            let result = await res.json();
+            let result = 1; //await res.json();
 
             if (result === 1){
                 UserStore.isLoggedIn = true;
@@ -71,7 +70,7 @@ class SignIn extends Component {
             }
             else if (result === 0){
                 this.resetForm();
-                alert(result);
+                alert('Failed to log in.');
             }
         }
 
